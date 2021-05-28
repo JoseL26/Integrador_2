@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Empresa</title>
+        <link rel="stylesheet" href="{% static 'resources/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'resources/css/sweetalert2.css' %}">
+        <link rel="stylesheet" href="{% static 'resources/css/material.min.css' %}">
+        <link rel="stylesheet" href="{% static 'resources/css/material-design-iconic-font.min.css' %}">
+ 
+        <!--<link rel="stylesheet" href="<c:url value="/resources/css/jquery.mCustomScrollbar.css"/>"-->
+        <link rel="stylesheet" href="{% static 'resources/css/main.css' %}">
+    </head>
+<body>
+	<div class="login-wrap cover">
+		<div class="container-login">
+			<p class="text-center" style="font-size: 80px;">
+				<i class="zmdi zmdi-account-circle"></i>
+			</p>
+			<p class="text-center text-condensedLight">Ingresa con tu cuenta</p>
+            <form method="post" action="iniciar">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				    <input Class="mdl-textfield__input" name="usuario"></input>
+                                    <label Class="mdl-textfield__label" name="usuario">Usuario</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				    <input Class="mdl-textfield__input" type="password" name="pass"></input>
+				    <label Class="mdl-textfield__label" name="pass">Contraseña</label>
+				</div>
+				<button class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; margin: 0 auto; display: block;">
+					Ingresar
+				</button>
+			</form>
+		</div>
+	</div>
+        
+        <!--<script src="<c:url value="/resources/js/jquery-1.11.2.min.js"/>"></script>-->
+        <script src="{% static 'resources/js/material.min.js' %}"></script>
+        <script src="{% static 'resources/js/sweetalert2.min.js' %}"></script>
+        <script src="{% static 'resources/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+        <script src="{% static 'resources/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'lista.html' %}
+
+{% block columns %}
+    <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">DNI</th>
+        <th scope="col">Direccion</th>
+        <th scope="col">Distrito</th>
+        <th scope="col">Provincia</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Cargo</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for e in empleados %}
+        <tr>
+            <td><a href="">{{ e.id }}</a></td>
+            <td>{{e.Apellidos}}</td>
+            <td>{{e.Nombres}}</td>
+            <td>{{e.DNI}}</td>
+            <td>{{e.Direccion}}</td>
+            <td>{{e.Distrito}}</td>
+            <td>{{e.Provincia}}</td>
+            <td>{{e.Telefono}}</td>
+            <td>{{e.Correo}}</td>
+            <td>{{e.categorias}}</td>
+            <td>{{e.cargos}}</td>
+            <td>{{e.Estado}}</td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                    <i class="fas fa-edit"></i>
+                    Editar
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-flat" >
+                    <i class="fas fa-trash-alt"></i>
+                    Eliminar
+                </button>
+
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'body.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<form action="." method="post">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-edit"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="{{ action }}">
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="btn btn-warning swalDefaultWarning" aria-hidden="true">*</button>
+                    <h5><i class="fas fa-ban"></i>A ocurrido un error al guardar el registro</h5>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+            {% endif %}
+
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="desc">{{field.label}}</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-flat " id="btnText">
+                <i class="fas fa-plus"></i> Guardar registro
+            </button>
+            <a href="{{ list_url }}" class="btn btn-primary">Cancelar</a>
+        </div>
+        <!-- /.card -->
+    </div>
+</form>
+
+<script type="javascript">
+    {% if form.errors %}
+        var errors = "";
+        {% for field in form %}
+            {% for error in field.errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+        {% endfor %}
+
+         Swal.fire({
+            title: 'Error!',
+            text: errors,
+            icon: 'error',
+         });
+    {% endif %}
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: 'json'
+        }).done(function (data) {
+            if(!data.hasOwnProperty('error')) {
+                location.href = '{{ list_url }}';
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus+': '+errorThrown);
+        }).always(function (data) {
+
+        });
+    });
+</script>
+    
+{% endblock %}
