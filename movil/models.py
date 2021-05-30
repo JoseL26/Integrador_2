@@ -5,12 +5,12 @@ from django.forms import model_to_dict
 
 
 class Categoria(models.Model):
-    Descripcion=models.CharField(max_length=40)
-    Estado=models.IntegerField()
+    Descripcion = models.CharField(max_length=40)
+    Estado = models.IntegerField(default=1)
 
     class Meta:
         ordering = ["Descripcion"]
-        verbose_name_plural="Categorias"
+        verbose_name_plural = "Categorias"
 
     def __str__(self):
         return self.Descripcion
@@ -20,13 +20,13 @@ class Categoria(models.Model):
         return item
 
 class Cargo(models.Model):
-    Descripcion=models.CharField(max_length=50)
-    Departament=models.CharField(max_length=40)
-    Estado=models.IntegerField()
+    Descripcion = models.CharField(max_length=50)
+    Departament = models.CharField(max_length=40)
+    Estado = models.IntegerField(default=1)
 
     class Meta:
         ordering = ["Descripcion"]
-        verbose_name_plural="Cargos"
+        verbose_name_plural = "Cargos"
 
     def __str__(self):
         return self.Descripcion
@@ -46,7 +46,7 @@ class Empleado(models.Model):
     Correo = models.CharField(max_length=40)
     categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     cargos = models.ForeignKey(Cargo, on_delete=models.CASCADE)
-    Estado = models.CharField(max_length=1)
+    Estado = models.IntegerField(default=1)
 
     class Meta:
         ordering = ["Apellidos"]
@@ -61,10 +61,10 @@ class Empleado(models.Model):
 
 class CaterogiaEquipo(models.Model):
     Desc_categoria = models.CharField(max_length=40)
-    Estado = models.DateField(default=1)
+    Estado = models.IntegerField(default=1)
 
     class Meta:
-        ordering = ["-id"]
+        ordering = ["Desc_categoria"]
         verbose_name_plural = "CaterogiaEquipos"
 
     def __str__(self):
@@ -76,6 +76,7 @@ class CaterogiaEquipo(models.Model):
 
 class Marca(models.Model):
     Desc_marca = models.CharField(max_length=50)
+    Estado = models.IntegerField(default=1)
 
     def __str__(self):
         return self.Desc_marca
@@ -87,20 +88,20 @@ class Equipo(models.Model):
     Marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     Modelo = models.CharField(max_length=30)
     Modelo_motor = models.CharField(max_length=30)
-    Estado = models.IntegerField()
+    Estado = models.IntegerField(default=1)
 
     def __str__(self):
         return self.Desc_equipo
 
 class OrdenTrabajo(models.Model):
-    Orden = models.CharField(max_length=10,primary_key=True)
+    Orden = models.CharField(max_length=10, primary_key=True)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     eq_sistema = models.CharField(max_length=10)
     conjunto = models.CharField(max_length=5)
     desc_conjunto = models.CharField(max_length=30)
     fase = models.CharField(max_length=4)
     Responsable = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    estado = models.IntegerField
+    estado = models.IntegerField(default=1)
 
     def __str__(self):
         return self.equipo
@@ -111,7 +112,7 @@ class Operciones(models.Model):
     orden = models.ForeignKey(OrdenTrabajo, on_delete=models.CASCADE)
     Etapa = models.CharField(max_length=10)
     Resposable = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    horas = models.DecimalField
+    horas = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     def __str__(self):
         return self.Descripcion
@@ -119,7 +120,7 @@ class Operciones(models.Model):
 class ParteHoras(models.Model):
     Empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     fecha = models.DateField()
-    TotalHoras = models.DecimalField
+    TotalHoras = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     def __str__(self):
         return self.fecha
@@ -128,10 +129,7 @@ class DetalleParte(models.Model):
     NumParte = models.ManyToManyField(ParteHoras)
     Orden = models.ManyToManyField(OrdenTrabajo)
     operacion = models.ForeignKey(Operciones, on_delete=models.CASCADE)
-    Cantidad = models.DecimalField
+    Cantidad = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     def __str__(self):
         return self.NumParte
-
-
-
