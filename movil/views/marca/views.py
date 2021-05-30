@@ -6,21 +6,21 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
 
-from movil.forms import CategiaEquipoForm
-from movil.models import CaterogiaEquipo
+from movil.forms import MarcaEquipoForm
+from movil.models import Marca
 
 
-def CategoriaListEq(request):
+def MarcaListEq(request):
     data = {
-        'titulo': 'Listado de categoria de equipos',
-        'categoria_equipos': CaterogiaEquipo.objects.all()
+        'titulo': 'Listado de marca de equipos',
+        'marcas': Marca.objects.all()
     }
-    return render(request, 'categoria_equipo/listar_cat_equipo.html', data)
+    return render(request, 'marca/lista_marca.html', data)
 
 
-class Categori_Lista_Equipo(ListView):
-    model = CaterogiaEquipo
-    template_name = 'categoria_equipo/listar_cat_equipo.html'
+class Marca_Lista_Equipo(ListView):
+    model = Marca
+    template_name = 'marca/lista_marca.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -29,7 +29,7 @@ class Categori_Lista_Equipo(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = CaterogiaEquipo.objects.get(pk=request.POST['id']).toJSON()
+            data = Marca.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
@@ -37,18 +37,18 @@ class Categori_Lista_Equipo(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Listado de categoria de equipos'
-        context['create_url'] = reverse_lazy('movil:CategoraCreatet_Eq')
-        context['list_url'] = reverse_lazy('movil:CategoriaListEq')
-        context['entity'] = 'CaterogiaEquipos'
+        context['titulo'] = 'Listado de marca de equipos'
+        context['create_url'] = reverse_lazy('movil:MarcaCreate_Eq')
+        context['list_url'] = reverse_lazy('movil:MarcaListEq')
+        context['entity'] = 'Marcas'
         return context
 
 
-class CategoriaCreateEq(CreateView):
-    model = CaterogiaEquipo
-    form_class = CategiaEquipoForm
-    template_name = 'categoria/crear_categoria.html'
-    success_url = reverse_lazy('movil:CategoriaListEq')
+class MarcaCreateEq(CreateView):
+    model = Marca
+    form_class = MarcaEquipoForm
+    template_name = 'marca/crear_marca.html'
+    success_url = reverse_lazy('movil:MarcaListEq')
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -76,17 +76,17 @@ class CategoriaCreateEq(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Registro de categorias de equipos'
-        context['entity'] = 'CaterogiaEquipos'
-        context['list_url'] = reverse_lazy('movil:CategoriaListEq')
+        context['titulo'] = 'Registro de marca de equipos'
+        context['entity'] = 'Marcas'
+        context['list_url'] = reverse_lazy('movil:MarcaListEq')
         context['action'] = 'add'
         return context
 
-class CategoriaUpdateEq(UpdateView):
-    model = CaterogiaEquipo
-    form_class = CategiaEquipoForm
-    template_name = 'categoria/crear_categoria.html'
-    success_url = reverse_lazy('movil:CategoriaListEq')
+class MarcaUpdateEq(UpdateView):
+    model = Marca
+    form_class = MarcaEquipoForm
+    template_name = 'marca/crear_marca.html'
+    success_url = reverse_lazy('movil:MarcaListEq')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -108,8 +108,8 @@ class CategoriaUpdateEq(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Edición de categoria de equipos'
-        context['entity'] = 'CaterogiaEquipos'
-        context['list_url'] = reverse_lazy('movil:CategoriaListEq')
+        context['titulo'] = 'Edición de marca de equipos'
+        context['entity'] = 'Marcas'
+        context['list_url'] = reverse_lazy('movil:MarcaListEq')
         context['action'] = 'edit'
         return context

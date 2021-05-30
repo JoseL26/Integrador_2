@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'lista.html' %}
+<table class="table table-striped table-bordered table-hover">
+{% block columns %}
+    <tr>
+        <th scope="col">Numero</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo equipo</th>
+        <th scope="col">Modelo motor</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.Cod_equipo }}</td>
+            <td>{{ c.Desc_equipo }}</td>
+            <td>{{ c.CaterogiaEq }}</td>
+            <td>{{ c.Marca }}</td>
+            <td>{{ c.Modelo }}</td>
+            <td>{{ c.Modelo_motor }}</td>
+            <td>
+                <a href="{% url 'movil:Update_Equipo' c.id %}" class="btn btn-warning btn-xs btn-flat">
+                    <span class="las la-pen"></span>
 
-</body>
-</html>
+                </a>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <span class="las la-trash"></span>
+
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+</table>

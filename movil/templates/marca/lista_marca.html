@@ -11,9 +11,9 @@
     {% for c in object_list %}
         <tr>
             <td>{{ c.id }}</td>
-            <td>{{ c.Desc_categoria }}</td>
+            <td>{{ c.Desc_marca }}</td>
             <td>
-                <a href="{% url 'movil:Categoriaupdate_Eq' c.id %}" class="btn btn-warning btn-xs btn-flat">
+                <a href="{% url 'movil:Marcaupdate_Eq' c.id %}" class="btn btn-warning btn-xs btn-flat">
                     <span class="las la-pen"></span>
 
                 </a>

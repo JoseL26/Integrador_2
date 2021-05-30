@@ -133,34 +133,119 @@ class CargoForm(ModelForm):
             data['error'] = str(e)
         return data
 
-#formulario de cargo
+#formulario de categoria de equipo
 class CategiaEquipoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # for form in self.visible_fields():
         #    form.field.widget.attrs['class'] = 'form-control'
         #    form.field.widget.attrs['autocomplete'] = 'off'
-        self.fields['Descripcion'].widget.attrs['autofocus'] = True
+        self.fields['Desc_categoria'].widget.attrs['autofocus'] = True
 
     class Meta:
         model = CaterogiaEquipo
         fields = '__all__'
         labels = {
-            'Descripcion': 'Cargo',
-            'Departament': 'Área'
+            'Desc_categoria': 'Categoria equipo',
+
         }
         widgets = {
-            'Descripcion': TextInput(
+            'Desc_categoria': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de cargo'
+                    'placeholder': 'Ingrese categoria de equipo'
                 }
             ),
-            'Departament': TextInput(
+            'Estado': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de área'
+                    'placeholder': 'Ingrese de Estado 1 o 0',
+                    'maxlength': '1',
+                    'aria-valuemax': '1'
                 }
-            ),
+            )
+        }
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
+#formulario de marca de equipo
+class MarcaEquipoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # for form in self.visible_fields():
+        #    form.field.widget.attrs['class'] = 'form-control'
+        #    form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['Desc_marca'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Marca
+        fields = '__all__'
+        labels = {
+            'Desc_marca': 'Marca equipo',
+
+        }
+        widgets = {
+            'Desc_marca': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese marca de equipo'
+                }
+            ),
+            'Estado': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese de Estado 1 o 0',
+                    'maxlength': '1',
+                    'aria-valuemax': '1'
+                }
+            )
+        }
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+#formulario de marca de equipo
+class EquipoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # for form in self.visible_fields():
+        #    form.field.widget.attrs['class'] = 'form-control'
+        #    form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['Cod_equipo'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Equipo
+        fields = '__all__'
+        labels = {
+            'Cod_equipo': 'Codigo equipo',
+            'Desc_equipo': 'Descripción equipo',
+            'CaterogiaEq': 'Categoria',
+
+        }
+        widgets = {
+            'Cod_equipo': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese codigo de equipo'
+                }
+            ),
+            'Desc_equipo': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese descripción de equipo'
+                }
+            ),
             'Estado': TextInput(
                 attrs={
                     'placeholder': 'Ingrese de Estado 1 o 0',

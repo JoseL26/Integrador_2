@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 from django.forms import model_to_dict
 
-
 class Categoria(models.Model):
     Descripcion = models.CharField(max_length=40)
     Estado = models.IntegerField(default=1)
@@ -78,8 +77,16 @@ class Marca(models.Model):
     Desc_marca = models.CharField(max_length=50)
     Estado = models.IntegerField(default=1)
 
+    class Meta:
+        ordering = ["Desc_marca"]
+        verbose_name_plural = "Marcas"
+
     def __str__(self):
         return self.Desc_marca
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
 class Equipo(models.Model):
     Cod_equipo = models.CharField(max_length=10, unique=True)
@@ -90,8 +97,16 @@ class Equipo(models.Model):
     Modelo_motor = models.CharField(max_length=30)
     Estado = models.IntegerField(default=1)
 
+    class Meta:
+        ordering = ["Desc_equipo"]
+        verbose_name_plural = "Equipos"
+
     def __str__(self):
         return self.Desc_equipo
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
 class OrdenTrabajo(models.Model):
     Orden = models.CharField(max_length=10, primary_key=True)
