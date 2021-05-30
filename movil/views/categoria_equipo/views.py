@@ -1,23 +1,25 @@
-from movil.forms import FormularioEmpleado
-from movil.models import Categoria, Empleado
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
 
-# Create your views here.
-def ListaEmpleado(request):
-    data = {
-        'titulo': 'Listado de empleados',
-        'empleados': Empleado.objects.all()
-    }
-    return render(request, 'empleado/lista_empleado.html', data)
+from movil.forms import CategoriaForm
+from movil.models import Categoria
 
-class Empleado_Lista(ListView):
-    model = Empleado
-    template_name = 'empleado/lista_empleado.html'
+
+def CategoriaList(request):
+    data = {
+        'titulo': 'Listado de categorias',
+        'categorias': Categoria.objects.all()
+    }
+    return render(request, 'categoria/categoria_lista.html', data)
+
+
+class Categori_Lista(ListView):
+    model = Categoria
+    template_name = 'categoria/categoria_lista.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -26,7 +28,7 @@ class Empleado_Lista(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Empleado.objects.get(pk=request.POST['id']).toJSON()
+            data = Categoria.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
@@ -34,17 +36,18 @@ class Empleado_Lista(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Listado de empleados'
-        context['create_url'] = reverse_lazy('movil:Crear_Empleado')
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
-        context['entity'] = 'Empleados'
+        context['titulo'] = 'Listado de categorias'
+        context['create_url'] = reverse_lazy('movil:Categoriacreate')
+        context['list_url'] = reverse_lazy('movil:CategoriaList')
+        context['entity'] = 'Categorias'
         return context
 
-class Empleado_Create(CreateView):
-    model = Empleado
-    form_class = FormularioEmpleado
-    template_name = 'empleado/empleado.html'
-    success_url = reverse_lazy('movil:ListaEmpleado')
+
+class CategoriaCreate(CreateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'categoria/crear_categoria.html'
+    success_url = reverse_lazy('movil:CategoriaList')
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -72,17 +75,17 @@ class Empleado_Create(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Registro de empleados'
-        context['entity'] = 'Empleados'
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
+        context['titulo'] = 'Registro de categorias'
+        context['entity'] = 'Categorias'
+        context['list_url'] = reverse_lazy('movil:CategoriaList')
         context['action'] = 'add'
         return context
 
-class Empleado_Update(UpdateView):
-    model = Empleado
-    form_class = FormularioEmpleado
-    template_name = 'empleado/empleado.html'
-    success_url = reverse_lazy('movil:ListaEmpleado')
+class CategoriaUpdate(UpdateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'categoria/crear_categoria.html'
+    success_url = reverse_lazy('movil:CategoriaList')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -104,9 +107,8 @@ class Empleado_Update(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Edición de empleado'
-        context['entity'] = 'Empleados'
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
+        context['titulo'] = 'Edición de categoria'
+        context['entity'] = 'Categorias'
+        context['list_url'] = reverse_lazy('movil:CategoriaList')
         context['action'] = 'edit'
         return context
-

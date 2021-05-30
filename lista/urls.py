@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from movil.views.empleado.views import home, Fecha_actual, horas_adelante, buscar, empleado, ListaEmpleado, categoria, cargo, crear_usuario, crear_categoria, CategoriaList, CategoriaCreate
+from movil.views.empleado.views import ListaEmpleado
 from contactos.views import Index, contactos
 from django.conf.urls.static import static
 
@@ -26,14 +26,6 @@ urlpatterns = [
     #url(r'^$', views.Index),
     url(r'^index/$', Index, name='index'),
     url(r'^movil/', include('movil.urls')),
-    url(r'^buscar/$', buscar),
-    url(r'^list_emp/$', ListaEmpleado,name='ver_lista'),
-    url(r'^contactos/$', contactos),
-    url(r'^registrar/$', empleado, name='registrar'),
-    url(r'^categoria/$', categoria, name='categoria'),
-    url(r'^crear_categoria/$', crear_categoria, name='crear_categoria'),
-    url(r'^categoria_lista/$', CategoriaList, name='categoria_lista'),
-    url(r'^home/$', home, name='home'),
-    url(r'^cargos/$',cargo, name='cargo'),
-    url(r'^crear_usuario/$',crear_usuario, name='crear_usuario')
+
+
 ]

@@ -18,7 +18,7 @@
     </tr>
 {% endblock %}
 {% block rows %}
-    {% for e in empleados %}
+    {% for e in object_list %}
         <tr>
             <td><a href="">{{ e.id }}</a></td>
             <td>{{e.Apellidos}}</td>
@@ -33,10 +33,10 @@
             <td>{{e.cargos}}</td>
             <td>{{e.Estado}}</td>
             <td>
-                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                <a href="{% url 'movil:Actualizar_update' e.id %}"  class="btn btn-warning btn-xs btn-flat">
                     <i class="fas fa-edit"></i>
                     Editar
-                </button>
+                </a>
                 <button type="button" class="btn btn-danger btn-xs btn-flat" >
                     <i class="fas fa-trash-alt"></i>
                     Eliminar
