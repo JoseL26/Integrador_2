@@ -265,3 +265,105 @@ class EquipoForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+class OrdenTrabajoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # for form in self.visible_fields():
+        #    form.field.widget.attrs['class'] = 'form-control'
+        #    form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['Orden'].widget.attrs['autofocus'] = True
+    
+    class Meta:
+        model = OrdenTrabajo
+        fields = '__all__'
+        labels = {
+            'eq_sistema': 'Sistema',
+            'desc_conjunto': 'Descripcion'
+        }
+        widgets = {
+            'Orden': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la Orden'
+                }
+            ),
+            
+            'eq_sistema': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese un sistema'
+                }
+            ),
+            'conjunto': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese un conjunto'
+                }
+            ),
+            'desc_conjunto': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese desc'
+                }
+            ),
+            'fase': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese una fase'
+                }
+            ),
+            
+            'estado': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese de Estado 1 o 0',
+                    'maxlength': '1',
+                    'aria-valuemax': '1'
+                }
+            )
+        }
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+class UsuarioForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # for form in self.visible_fields():
+        #    form.field.widget.attrs['class'] = 'form-control'
+        #    form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['usuario'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Usuario
+        fields = '__all__'
+        labels = {
+            'usuario': 'Usuario',
+            'clave': 'Contraseña'
+        }
+        widgets = {
+            'usuario': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese de cargo'
+                }
+            ),
+            'clave': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese de área'
+                }
+            )
+        }
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

@@ -58,6 +58,22 @@ class Empleado(models.Model):
         item = model_to_dict(self)
         return item
 
+class Usuario(models.Model):
+    Empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    Usuario = models.CharField(max_length=30)
+    Clave = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ["Usuario"]
+        verbose_name_plural="Usuarios"
+
+    def __str__(self):
+        return self.Usuario
+    
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
 class CaterogiaEquipo(models.Model):
     Desc_categoria = models.CharField(max_length=40)
     Estado = models.IntegerField(default=1)
@@ -102,7 +118,7 @@ class Equipo(models.Model):
         verbose_name_plural = "Equipos"
 
     def __str__(self):
-        return self.Desc_equipo
+        return self.Cod_equipo
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -118,8 +134,16 @@ class OrdenTrabajo(models.Model):
     Responsable = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     estado = models.IntegerField(default=1)
 
+    class Meta:
+        ordering = ["Orden"]
+        verbose_name_plural = "Ordenes"
+
     def __str__(self):
-        return self.equipo
+        return self.Orden
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
 class Operciones(models.Model):
     Descripcion = models.CharField(max_length=50)

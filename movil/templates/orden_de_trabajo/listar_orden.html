@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'lista.html' %}
 
-</body>
-</html>
+{% block columns %}
+    <tr>
+        
+        <th scope="col">Orden</th>
+        <th scope="col">Equipo</th>
+        <th scope="col">Sistema</th>
+        <th scope="col">Conjunto</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Fase</th>
+        <th scope="col">Responsable</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            
+            <td>{{c.Orden}}</td>
+            <td>{{c.equipo}}</td>
+            <td>{{c.eq_sistema}}</td>
+            <td>{{c.conjunto}}</td>
+            <td>{{c.desc_conjunto}}</td>
+            <td>{{c.fase}}</td>
+            <td>{{c.Responsable}}</td>
+            <td>{{c.estado}}</td>
+            <td>
+                <a href="{% url 'movil:update_orden' c.Orden %}" class="btn btn-warning btn-xs btn-flat">
+                    <span class="las la-pen"></span>
+                    
+                </a>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <span class="las la-trash"></span>
+                    
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
