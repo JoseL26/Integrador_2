@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^categoria/lista2/$', CategoriaList, name="CategoriaList2"),
     url(r'^categoria/create/$', CategoriaCreate.as_view(), name="Categoriacreate"),
     path('categoria/edit/<int:pk>/', CategoriaUpdate.as_view(), name="Category_update"),
+    path('categoria/delete/<int:pk>/', CategoriaDelete.as_view(), name="Category_delete"),
     url(r'^cargo/lista/$', Cargo_Lista.as_view(), name="Cargolist"),
     url(r'^cargo/create/$', CargoCreate.as_view(), name="Cargocreate"),
     path('cargo/edit/<int:pk>/', CargoUpdate.as_view(), name="Cargo_update"),

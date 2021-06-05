@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
 from movil.forms import CategoriaForm
@@ -29,10 +29,16 @@ class Categori_Lista(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Categoria.objects.get(pk=request.POST['id']).toJSON()
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Categoria.objects.all():
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'a ocurrido un error'
         except Exception as e:
             data['error'] = str(e)
-        return JsonResponse(data)
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -62,16 +68,6 @@ class CategoriaCreate(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,4 +108,30 @@ class CategoriaUpdate(UpdateView):
         context['entity'] = 'Categorias'
         context['list_url'] = reverse_lazy('movil:CategoriaList')
         context['action'] = 'edit'
+        return context
+
+class CategoriaDelete(DeleteView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'categoria/eliminar.html'
+    success_url = reverse_lazy('movil:CategoriaList')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['titulo'] = 'Eliminación de categoria'
+        context['entity'] = 'Categorias'
+        context['list_url'] = reverse_lazy('movil:CategoriaList')
         return context

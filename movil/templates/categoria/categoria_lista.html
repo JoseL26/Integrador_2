@@ -1,5 +1,8 @@
 {% extends 'lista.html' %}
-<table class="table table-striped table-bordered table-hover">
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'categoria/js/lista.js' %}"></script>
+{% endblock %}
 {% block columns %}
     <tr>
         <th scope="col">Numero</th>
@@ -7,22 +10,11 @@
         <th scope="col">Opciones</th>
     </tr>
 {% endblock %}
+
 {% block rows %}
-    {% for c in object_list %}
-        <tr>
-            <td>{{ c.id }}</td>
-            <td>{{ c.Descripcion }}</td>
-            <td>
-                <a href="{% url 'movil:Category_update' c.id %}" class="btn btn-warning btn-xs btn-flat">
-                    <span class="las la-pen"></span>
-                    
-                </a>
-                <button type="button" class="btn btn-danger btn-xs btn-flat">
-                    <span class="las la-trash"></span>
-                    
-                </button>
-            </td>
-        </tr>
-    {% endfor %}
+
 {% endblock %}
-</table>
+
+{% block javascript %}
+
+{% endblock %}
