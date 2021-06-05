@@ -6,7 +6,7 @@ from contactos.forms import FormularioContactos
 # Create your views here.
 def Index(request):
     hola="Bienvenidos a mi pagina"
-    return render(request, 'inicio.html')
+    return render(request, 'index.html')
 
 def contactos(request):
 

@@ -335,24 +335,25 @@ class UsuarioForm(ModelForm):
         # for form in self.visible_fields():
         #    form.field.widget.attrs['class'] = 'form-control'
         #    form.field.widget.attrs['autocomplete'] = 'off'
-        self.fields['usuario'].widget.attrs['autofocus'] = True
+        self.fields['Usuario'].widget.attrs['autofocus'] = True
 
     class Meta:
         model = Usuario
         fields = '__all__'
         labels = {
-            'usuario': 'Usuario',
-            'clave': 'Contraseña'
+            'Usuario': 'Usuario',
+            'Ulave': 'Contraseña'
         }
         widgets = {
-            'usuario': TextInput(
+            'Usuario': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de cargo'
+                    'placeholder': 'Ingrese usuario'
                 }
             ),
-            'clave': TextInput(
+            'Clave': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de área'
+                    'placeholder': 'Ingrese una contraseña',
+                    'type': 'password'
                 }
             )
         }

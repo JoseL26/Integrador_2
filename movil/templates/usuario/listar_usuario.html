@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'lista.html' %}
 
-</body>
-</html>
+{% block columns %}
+    <tr>
+        <th scope="col">Trabajador</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Contraseña</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for e in object_list %}
+        <tr>
+            <!--<td>{{e.id}}</td>-->
+            <td>{{e.Empleado}}</td>
+            <td>{{e.Usuario}}</td>
+            <td>{{e.Clave}}</td>
+            <td>
+                <a href="{% url 'movil:Usuario_Update' e.id %}"  class="btn btn-warning btn-xs btn-flat">
+                    <i class="las la-pen"></i>
+                    Editar
+                </a>
+                <button type="button" class="btn btn-danger btn-xs btn-flat" >
+                    <i class="las la-trash"></i>
+                    Eliminar
+                </button>
+
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
