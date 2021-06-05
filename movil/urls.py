@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 
+from movil.views.actividades.views import Parte_horas_create
 from movil.views.cargo.views import *
 from movil.views.categoria.views import *
 from movil.views.categoria_equipo.views import *
@@ -35,4 +36,5 @@ urlpatterns = [
     url(r'^orden_trabajo/lista/$', Orden_Lista.as_view(), name="OrdenList"),
     url(r'^orden_trabajo/create/$', OrdenCreate.as_view(), name="OrdenCreate"),
     path('orden_trabajo/edit/<int:pk>/', OrdenUpdate.as_view(), name="update_orden"),
+    url(r'^actividades/create/$', Parte_horas_create.as_view(), name="ParteCreate"),
 ]

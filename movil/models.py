@@ -161,13 +161,23 @@ class ParteHoras(models.Model):
     fecha = models.DateField()
     TotalHoras = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
+    class Meta:
+        ordering = ["fecha"]
+        verbose_name_plural = "ParteHoras"
+
     def __str__(self):
         return self.fecha
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
 
 class DetalleParte(models.Model):
     NumParte = models.ManyToManyField(ParteHoras)
     Orden = models.ManyToManyField(OrdenTrabajo)
     operacion = models.ForeignKey(Operciones, on_delete=models.CASCADE)
+    desc_actividad = models.CharField(max_length=100, blank=True)
     Cantidad = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     def __str__(self):

@@ -1,5 +1,6 @@
 from django import forms
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, TextInput, DateInput, Select
+from django.utils.datetime_safe import datetime
 
 from .models import *
 
@@ -367,3 +368,40 @@ class UsuarioForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+#formulario de categoria
+class ParteHorasForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['class'] = 'form-control'
+            form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['Empleado'].widget.attrs['autofocus'] = True
+        self.fields['Empleado'].widget.attrs['class'] = 'form-control select2'
+        self.fields['Empleado'].widget.attrs['style'] = 'width: 100%'
+
+    class Meta:
+        model = ParteHoras
+        fields = '__all__'
+        labels ={
+            'Estado': 'Estado'
+        }
+
+        widgets = {
+            'Empleado': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+            }),
+            'fecha': DateInput(format='%y-%m-%d', attrs={
+                'value': datetime.now().strftime('%y-%m-%d'),
+
+            }),
+
+            'TotalHoras': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese de Estado 1 o 0',
+                    'maxlength': '1',
+                    'aria-valuemax': '1'
+                }
+            )
+        }
