@@ -37,12 +37,12 @@ urlpatterns = [
     url(r'^orden_trabajo/lista/$', Orden_Lista.as_view(), name="OrdenList"),
     url(r'^orden_trabajo/create/$', OrdenCreate.as_view(), name="OrdenCreate"),
     path('orden_trabajo/edit/<int:pk>/', OrdenUpdate.as_view(), name="update_orden"),
-<<<<<<< HEAD
+
     url(r'^actividades/create/$', Parte_horas_create.as_view(), name="ParteCreate"),
-=======
+
     url(r'^usuario/lista/$', Usuario_Lista.as_view(), name="UsuarioList"),
     url(r'^usuario/create/$', UsuarioCreate.as_view(), name="UsuarioCreate"),
     path('usuario/edit/<int:pk>/', UsuarioUpdate.as_view(), name="Usuario_Update"),
     #url(r'^usuario/login/$', name="UsuarioList"),
->>>>>>> f4fc5ba4f258b4a50d8dde306f42c8f5b362a121
+
 ]
