@@ -10,13 +10,6 @@ from movil.forms import ParteHorasForm
 from movil.models import ParteHoras
 
 
-def CategoriaList(request):
-    data = {
-        'titulo': 'Listado de categorias',
-        'categorias': ParteHoras.objects.all()
-    }
-    return render(request, 'categoria/categoria_lista.html', data)
-
 
 class Parte_horas_lis(ListView):
     model = ParteHoras

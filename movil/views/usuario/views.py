@@ -8,13 +8,6 @@ from django.views.generic import ListView, CreateView,UpdateView
 from movil.forms import UsuarioForm
 from movil.models import Usuario
 
-def UsuarioList(request):
-    data = {
-        'titulo': 'Listado de Usuarios',
-        'usuarios': Usuario.objects.all()
-    }
-    return render(request, 'usuario/listar_usuario.html', data)
-
 class Usuario_Lista(ListView):
     model = Usuario
     template_name = 'usuario/listar_usuario.html'
@@ -58,16 +51,6 @@ class UsuarioCreate(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -9,15 +9,6 @@ from django.utils.decorators import method_decorator
 from movil.forms import CategiaEquipoForm
 from movil.models import CaterogiaEquipo
 
-
-def CategoriaListEq(request):
-    data = {
-        'titulo': 'Listado de categoria de equipos',
-        'categoria_equipos': CaterogiaEquipo.objects.all()
-    }
-    return render(request, 'categoria_equipo/listar_cat_equipo.html', data)
-
-
 class Categori_Lista_Equipo(ListView):
     model = CaterogiaEquipo
     template_name = 'categoria_equipo/listar_cat_equipo.html'
@@ -62,16 +53,6 @@ class CategoriaCreateEq(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

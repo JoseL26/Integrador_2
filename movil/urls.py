@@ -15,7 +15,6 @@ app_name = 'movil'
 
 urlpatterns = [
     url(r'^categoria/lista/$', Categori_Lista.as_view(), name="CategoriaList"),
-    url(r'^categoria/lista2/$', CategoriaList, name="CategoriaList2"),
     url(r'^categoria/create/$', CategoriaCreate.as_view(), name="Categoriacreate"),
     path('categoria/edit/<int:pk>/', CategoriaUpdate.as_view(), name="Category_update"),
     path('categoria/delete/<int:pk>/', CategoriaDelete.as_view(), name="Category_delete"),

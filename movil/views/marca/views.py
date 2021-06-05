@@ -9,15 +9,6 @@ from django.utils.decorators import method_decorator
 from movil.forms import MarcaEquipoForm
 from movil.models import Marca
 
-
-def MarcaListEq(request):
-    data = {
-        'titulo': 'Listado de marca de equipos',
-        'marcas': Marca.objects.all()
-    }
-    return render(request, 'marca/lista_marca.html', data)
-
-
 class Marca_Lista_Equipo(ListView):
     model = Marca
     template_name = 'marca/lista_marca.html'
@@ -62,16 +53,6 @@ class MarcaCreateEq(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

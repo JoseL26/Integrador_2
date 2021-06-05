@@ -9,15 +9,6 @@ from django.utils.decorators import method_decorator
 from movil.forms import CategoriaForm
 from movil.models import Categoria
 
-
-def CategoriaList(request):
-    data = {
-        'titulo': 'Listado de categorias',
-        'categorias': Categoria.objects.all()
-    }
-    return render(request, 'categoria/categoria_lista.html', data)
-
-
 class Categori_Lista(ListView):
     model = Categoria
     template_name = 'categoria/categoria_lista.html'

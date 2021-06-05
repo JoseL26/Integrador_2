@@ -7,14 +7,6 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
 
-# Create your views here.
-def ListaEmpleado(request):
-    data = {
-        'titulo': 'Listado de empleados',
-        'empleados': Empleado.objects.all()
-    }
-    return render(request, 'empleado/lista_empleado.html', data)
-
 class Empleado_Lista(ListView):
     model = Empleado
     template_name = 'empleado/lista_empleado.html'
@@ -58,16 +50,6 @@ class Empleado_Create(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

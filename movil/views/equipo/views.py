@@ -9,15 +9,6 @@ from django.utils.decorators import method_decorator
 from movil.forms import EquipoForm
 from movil.models import Equipo
 
-
-def EquipoList(request):
-    data = {
-        'titulo': 'Listado de equipos',
-        'equipos': Equipo.objects.all()
-    }
-    return render(request, 'equipo/lista_equipo.html', data)
-
-
 class Lista_Equipo(ListView):
     model = Equipo
     template_name = 'equipo/lista_equipo.html'
@@ -62,16 +53,6 @@ class Create_Equipo(CreateView):
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
-
-    #    print(request.POST)
-    #    form=CategoriaForm(request.POST)
-    #    if form.is_valid():
-    #        form.save()
-    #        return HttpResponseRedirect(self.success_url)
-    #    self.object = None
-    #    contex = self.get_context_data(**kwargs)
-    #    contex['form'] = form
-    #    return render(request, self.template_name, contex)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
