@@ -7,6 +7,7 @@ from movil.views.categoria_equipo.views import *
 from movil.views.empleado.views import *
 from movil.views.equipo.views import *
 from movil.views.marca.views import *
+from movil.views.orden_trabajo.views import *
 
 app_name = 'movil'
 
@@ -30,4 +31,7 @@ urlpatterns = [
     url(r'^equipo/lista/$', Lista_Equipo.as_view(), name="Lista_Equipo"),
     url(r'^equipo/create/$', Create_Equipo.as_view(), name="Create_Equipo"),
     path('equipo/edit/<int:pk>/', Update_Equipo.as_view(), name="Update_Equipo"),
+    url(r'^orden_trabajo/lista/$', Orden_Lista.as_view(), name="OrdenList"),
+    url(r'^orden_trabajo/create/$', OrdenCreate.as_view(), name="OrdenCreate"),
+    path('orden_trabajo/edit/<int:pk>/', OrdenUpdate.as_view(), name="update_orden"),
 ]
