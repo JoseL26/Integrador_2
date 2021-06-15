@@ -1,0 +1,12 @@
+.wrap {
+    width: 90%;
+}
+
+.widget {
+    width: 40%;
+}
+
+.widget p {
+    display: inline-block;
+    line-height: 1em;
+}

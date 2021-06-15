@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
+from datetime import *
 
 class Empleado_Lista(ListView):
     model = Empleado
@@ -91,4 +92,3 @@ class Empleado_Update(UpdateView):
         context['list_url'] = reverse_lazy('movil:ListaEmpleado')
         context['action'] = 'edit'
         return context
-

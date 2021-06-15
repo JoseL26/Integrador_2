@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                    <a href="{% url 'index' %}" class="nav-link"><i class="las la-home"></i> Home</a>
                 </li>
                 <!--menu de mantenimiento-->
                 <li class="nav-item dropdown">
@@ -45,12 +45,15 @@
                 </li>
                 <!--termina menu-->
             </ul>
+            
         </div>
         <!--navbar-->
+
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
+                    <i class="las la-bell"></i>
+                    
                     {{ request.user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
