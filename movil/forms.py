@@ -1,6 +1,7 @@
 from django import forms
-from django.forms import ModelForm, TextInput, DateInput, Select
+from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField
 from django.utils.datetime_safe import datetime
+from django.views.generic import FormView
 
 from .models import *
 
@@ -377,9 +378,16 @@ class ParteHorasForm(ModelForm):
         for form in self.visible_fields():
             form.field.widget.attrs['class'] = 'form-control'
             form.field.widget.attrs['autocomplete'] = 'off'
+
+        #form1
         self.fields['Empleado'].widget.attrs['autofocus'] = True
         self.fields['Empleado'].widget.attrs['class'] = 'form-control select2'
         self.fields['Empleado'].widget.attrs['style'] = 'width: 100%'
+
+        #form2
+        self.fields['fecha'].widget.attrs ={
+
+        }
 
     class Meta:
         model = ParteHoras
@@ -406,3 +414,24 @@ class ParteHorasForm(ModelForm):
                 }
             )
         }
+
+class ListaForm(Form):
+    categorias = ModelChoiceField(queryset=CaterogiaEquipo.objects.all(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
+    equipos = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
+    # search = CharField(widget=TextInput(attrs={
+    #     'class': 'form-control',
+    #     'placeholder': 'Ingrese una descripción'
+    # }))
+
+    search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))

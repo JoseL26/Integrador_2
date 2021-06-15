@@ -4,7 +4,7 @@ from django.db import models
 from django.forms import model_to_dict
 
 class Categoria(models.Model):
-    Descripcion = models.CharField(max_length=40)
+    Descripcion = models.CharField(max_length=40, unique=True)
     Estado = models.IntegerField(default=1)
 
     class Meta:
@@ -19,7 +19,7 @@ class Categoria(models.Model):
         return item
 
 class Cargo(models.Model):
-    Descripcion = models.CharField(max_length=50)
+    Descripcion = models.CharField(max_length=50, unique=True)
     Departament = models.CharField(max_length=40)
     Estado = models.IntegerField(default=1)
 
@@ -37,12 +37,12 @@ class Cargo(models.Model):
 class Empleado(models.Model):
     Apellidos = models.CharField(max_length=40)
     Nombres = models.CharField(max_length=40)
-    DNI = models.CharField(max_length=10)
+    DNI = models.CharField(max_length=10, unique=True)
     Direccion = models.CharField(max_length=45)
     Distrito = models.CharField(max_length=40)
     Provincia = models.CharField(max_length=30)
     Telefono = models.CharField(max_length=9)
-    Correo = models.CharField(max_length=40)
+    Correo = models.CharField(max_length=40, unique=True)
     categorias = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     cargos = models.ForeignKey(Cargo, on_delete=models.CASCADE)
     Estado = models.IntegerField(default=1)
@@ -75,7 +75,7 @@ class Usuario(models.Model):
         return item
 
 class CaterogiaEquipo(models.Model):
-    Desc_categoria = models.CharField(max_length=40)
+    Desc_categoria = models.CharField(max_length=40, unique=True)
     Estado = models.IntegerField(default=1)
 
     class Meta:
@@ -90,7 +90,7 @@ class CaterogiaEquipo(models.Model):
         return item
 
 class Marca(models.Model):
-    Desc_marca = models.CharField(max_length=50)
+    Desc_marca = models.CharField(max_length=50, unique=True)
     Estado = models.IntegerField(default=1)
 
     class Meta:
@@ -106,7 +106,7 @@ class Marca(models.Model):
 
 class Equipo(models.Model):
     Cod_equipo = models.CharField(max_length=10, unique=True)
-    Desc_equipo = models.CharField(max_length=50)
+    Desc_equipo = models.CharField(max_length=50, unique=True)
     CaterogiaEq = models.ForeignKey(CaterogiaEquipo, on_delete=models.CASCADE)
     Marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     Modelo = models.CharField(max_length=30)

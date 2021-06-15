@@ -1,4 +1,4 @@
-{% extends 'body.html' %}
+{% extends 'layout.html' %}
 {% load widget_tweaks %}
 {% block content %}
 <form action="." method="post">
@@ -62,27 +62,14 @@
             icon: 'error',
          });
     {% endif %}
-
     $('form').on('submit', function (e) {
         e.preventDefault();
         var parameters = $(this).serializeArray();
-        $.ajax({
-            url: window.location.pathname,
-            type: 'POST',
-            data: parameters,
-            dataType: 'json'
-        }).done(function (data) {
-            if(!data.hasOwnProperty('error')) {
-                location.href = '{{ list_url }}';
-                return false;
-            }
-            message_error(data.error);
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            alert(textStatus+': '+errorThrown);
-        }).always(function (data) {
-
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            location.href = '{{ list_url }}';
         });
     });
+
 </script>
     
 {% endblock %}

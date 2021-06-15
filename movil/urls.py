@@ -5,8 +5,10 @@ from movil.views.actividades.views import Parte_horas_create
 from movil.views.cargo.views import *
 from movil.views.categoria.views import *
 from movil.views.categoria_equipo.views import *
+from movil.views.dashboard.views import DashboardView
 from movil.views.empleado.views import *
 from movil.views.equipo.views import *
+from movil.views.listas.views import TestView
 from movil.views.marca.views import *
 from movil.views.orden_trabajo.views import *
 from movil.views.usuario.views import *
@@ -16,6 +18,7 @@ app_name = 'movil'
 urlpatterns = [
     url(r'^categoria/lista/$', Categori_Lista.as_view(), name="CategoriaList"),
     url(r'^categoria/create/$', CategoriaCreate.as_view(), name="Categoriacreate"),
+    url(r'^categoria/form/$', CategoriaFormView.as_view(), name="Categoriaform"),
     path('categoria/edit/<int:pk>/', CategoriaUpdate.as_view(), name="Category_update"),
     path('categoria/delete/<int:pk>/', CategoriaDelete.as_view(), name="Category_delete"),
     url(r'^cargo/lista/$', Cargo_Lista.as_view(), name="Cargolist"),
@@ -38,6 +41,11 @@ urlpatterns = [
     path('orden_trabajo/edit/<int:pk>/', OrdenUpdate.as_view(), name="update_orden"),
 
     url(r'^actividades/create/$', Parte_horas_create.as_view(), name="ParteCreate"),
+
+    #pagina de principal
+    url(r'^dashboard/$', DashboardView.as_view(), name="Dashboard"),
+    #listados
+    url(r'^listas/$', TestView.as_view(), name="test"),
 
     url(r'^usuario/lista/$', Usuario_Lista.as_view(), name="UsuarioList"),
     url(r'^usuario/create/$', UsuarioCreate.as_view(), name="UsuarioCreate"),

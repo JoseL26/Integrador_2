@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from django.utils.decorators import method_decorator
 
 from movil.forms import CategoriaForm
@@ -14,6 +14,7 @@ class Categori_Lista(ListView):
     template_name = 'categoria/categoria_lista.html'
 
     @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -47,6 +48,10 @@ class CategoriaCreate(CreateView):
     template_name = 'categoria/crear_categoria.html'
     success_url = reverse_lazy('movil:CategoriaList')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         data = {}
         try:
@@ -75,6 +80,7 @@ class CategoriaUpdate(UpdateView):
     template_name = 'categoria/crear_categoria.html'
     success_url = reverse_lazy('movil:CategoriaList')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -107,6 +113,7 @@ class CategoriaDelete(DeleteView):
     template_name = 'categoria/eliminar.html'
     success_url = reverse_lazy('movil:CategoriaList')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -125,4 +132,18 @@ class CategoriaDelete(DeleteView):
         context['titulo'] = 'Eliminación de categoria'
         context['entity'] = 'Categorias'
         context['list_url'] = reverse_lazy('movil:CategoriaList')
+        return context
+
+class CategoriaFormView(FormView):
+    form_class = CategoriaForm
+    template_name = 'categoria/crear_categoria.html'
+    success_url = reverse_lazy('movil:CategoriaList')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['titulo'] = 'Lista de categorias'
+        context['entity'] = 'Categorias'
+        context['list_url'] = reverse_lazy('movil:CategoriaList')
+        context['action'] = 'add'
         return context

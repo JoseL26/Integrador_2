@@ -48,6 +48,7 @@ class Parte_horas_create(CreateView):
     form_class = ParteHorasForm
     template_name = 'actividades/crear_actividades.html'
     success_url = reverse_lazy('index')
+    permission_required = "movil.add_actividades"
     url_redirect = success_url
 
     def post(self, request, *args, **kwargs):
