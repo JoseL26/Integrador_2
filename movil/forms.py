@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField
-from django.utils.datetime_safe import datetime
+from django.utils.datetime_safe import datetime, date
 from django.views.generic import FormView
 
 from .models import *
@@ -393,7 +393,8 @@ class ParteHorasForm(ModelForm):
         model = ParteHoras
         fields = '__all__'
         labels ={
-            'Estado': 'Estado'
+            'fecha' : 'Fecha',
+            'TotalHoras' : 'Total Horas'
         }
 
         widgets = {
@@ -401,12 +402,12 @@ class ParteHorasForm(ModelForm):
                 'class': 'form-control select2',
                 'style': 'width: 100%'
             }),
-            'fecha': DateInput(format='%y-%m-%d', attrs={
-                'value': datetime.now().strftime('%y-%m-%d'),
+            'Fecha': DateInput(format='%y-%m-%d', attrs={
+                'type': datetime.now().strftime('%y-%m-%d'),
 
             }),
 
-            'TotalHoras': TextInput(
+            'Total Horas': TextInput(
                 attrs={
                     'placeholder': 'Ingrese de Estado 1 o 0',
                     'maxlength': '1',

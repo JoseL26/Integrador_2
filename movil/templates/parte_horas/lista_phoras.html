@@ -1,0 +1,32 @@
+{% extends 'lista.html' %}
+
+{% block columns %}
+    <tr>
+        <th scope="col">Numero</th>
+        <th scope="col">Empleado</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Total de Horas</th>
+
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            <td>{{c.id}}</td>
+            <td>{{c.Empleado}}</td>
+            <td>{{c.fecha}}</td>
+            <td>{{c.TotalHoras}}</td>
+            <td>
+                <a href="{% url 'movil:PhorasUpdate' c.id %}" class="btn btn-warning btn-xs btn-flat">
+                    <span class="las la-pen"></span>
+                    
+                </a>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <span class="las la-trash"></span>
+                    
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
