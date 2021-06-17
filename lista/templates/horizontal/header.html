@@ -29,7 +29,7 @@
                         <li><a href="{% url 'movil:CategoriaListEq' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Categoria equipos</a></li>
                         <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Conjuntos componentes</a></li>
                         <li><a href="{% url 'movil:ListaEmpleado' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Empleados</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Horarios</a></li>
+                        <li><a href="{% url 'movil:PhorasList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Horarios</a></li>
                         <li><a href="{% url 'movil:OrdenList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Orden de trabajo</a></li>
 
 
@@ -52,12 +52,12 @@
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="las la-bell"></i>
+                    <i class="las la-user"></i>
                     
                     {{ request.user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-header" style="font-size: 12px;">Nombre y apellido</span>
+                    <span class="dropdown-header" style="font-size: 12px;">{{ request.user.username }}</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="las la-envelope mr-2"></i> perfil

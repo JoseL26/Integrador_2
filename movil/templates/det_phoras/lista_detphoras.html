@@ -1,0 +1,33 @@
+{% extends 'lista.html' %}
+
+{% block columns %}
+    <tr>
+        <th scope="col">Numero Parte</th>
+        <th scope="col">N° Orden</th>
+        <th scope="col">Operacion</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            <td>{{c.id}}</td>
+            <td>{{c.Orden}}</td>
+            <td>{{c.operacion}}</td>
+            <td>{{c.desc_actividad}}</td>
+            <td>{{c.Cantidad}}</td>
+            <td>
+                <a href="{% url 'movil:DetPhorasUpdate' c.id %}" class="btn btn-warning btn-xs btn-flat">
+                    <span class="las la-pen"></span>
+                    
+                </a>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <span class="las la-trash"></span>
+                    
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
