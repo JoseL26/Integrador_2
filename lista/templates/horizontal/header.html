@@ -22,7 +22,7 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Mantenimientos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-truck-loading"></i> Actividades</a></li>
+                        <li><a href="{% url 'movil:ParteCreate' %}" class="dropdown-item"><i class="fas fa-truck-loading"></i> Actividades</a></li>
                         <li><a href="{% url 'movil:Cargolist' %}" class="dropdown-item"><i class="fas fa-boxes"></i> Cargos</a></li>
                         <li><a href="{% url 'movil:CategoriaList' %}" class="dropdown-item"><i class="fas fa-users"></i> Categorias</a></li>
                         <li><a href="{% url 'movil:Lista_Equipo' %}" class="dropdown-item"><i class="fas fa-users"></i> Equipos</a></li>
@@ -52,7 +52,6 @@
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-<<<<<<< HEAD
                     <i class="las la-users-cog"></i>
                     {{ request.user.username }}
                 </a>
@@ -60,14 +59,14 @@
                     <span class="dropdown-header" style="font-size: 12px;">
                         Su ultimo acceso fue {{ request.user.last_login }}
                     </span>
-=======
+
                     <i class="las la-user"></i>
                     
                     {{ request.user.username }}
-                </a>
+                
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <span class="dropdown-header" style="font-size: 12px;">{{ request.user.username }}</span>
->>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
+
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="las la-envelope mr-2"></i> Editar perfil
@@ -86,14 +85,14 @@
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item dropdown-footer">Notificaciones</a>
                 </div>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">
                     <i class="las la-power-off" aria-hidden="true"></i>
                     Cerrar sesión
                 </a>
             </li>
-        </ul>
+        
         <!-- fin navbar-->
     </div>
   </nav>

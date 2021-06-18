@@ -21,6 +21,9 @@
 {% endblock %}
 
 {% block content %}
+<body onload="fnCreateTabla(6,6)">
+    
+
 <div class="card card-primary card-outline">
     <div class="card-header">
         <h3 class="card-title">
@@ -41,7 +44,7 @@
                             <label>Buscador de equipos</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscar" placeholder="ingrese la descripción de equipo "
-                                       autocomplete="off">
+                                       autocomplete="off" oninput="rinon()">
                                 <span class="input-group-append">
                                     <button type="button" class="btn btn-info btn-flat">
                                         <i class="las la-times"></i>
@@ -54,6 +57,7 @@
                             <thead>
                             <tr>
                                 <th>Eliminar</th>
+                                <th>Equipo</th>
                                 <th>Orden</th>
                                 <th>Operación</th>
                                 <th>Descripción</th>
@@ -64,6 +68,76 @@
 
                             </tbody>
                         </table>
+                        <script>
+                            function calcular(){
+                                var valor1 = parseFloat(document.getElementById('idcampo_6').value || 0);
+                                var valor2 = parseFloat(document.getElementById('idcampo_12').value || 0);
+                                var valor3 = parseFloat(document.getElementById('idcampo_18').value || 0);
+                                var valor4 = parseFloat(document.getElementById('idcampo_24').value || 0);
+                                var valor5 = parseFloat(document.getElementById('idcampo_30').value || 0);
+                                var valor6 = parseFloat(document.getElementById('idcampo_36').value || 0);
+
+                                document.getElementById('totalh').value = valor1+valor2+valor3+valor4+valor5+valor6;
+                            }
+
+                            function fnCreateTabla(renglones, columnas){
+                                var tblBody = document.getElementById('data').getElementsByTagName('tbody')[0];
+                                var renglon = document.createElement('tr');
+
+                                var id=0;
+
+                                for (var ren = 0; ren < renglones; ren++) {
+                                    
+                                    var renglon = document.createElement("tr");
+                                    
+                                    for (var col = 0; col < columnas; col++) {
+
+                                        var celda = document.createElement("td");
+                                        id++;
+
+                                        var oInput;
+                                        var icon;
+
+                                        if (col == 0) {
+                                            oInput = document.createElement("button");
+                                            oInput.type = "button";
+                                            oInput.className = "btn btn-danger btn-xs btn-flat";
+                                            oInput.name = "ncampo_"+id;
+                                            oInput.id = "idcampo_"+id;                                            
+                                            oInput.innerHTML = "Eliminar";
+                                            
+                                            
+                                        }
+                                        else if (col == 5) {
+                                            oInput = document.createElement("input");
+                                            oInput.type = "number";                                            
+                                            oInput.className = "form-control";
+                                            oInput.name = "ncampo_"+id;
+                                            oInput.id = "idcampo_"+id;
+                                            oInput.oninput = calcular;
+                                                                                                                                                                 
+                                        }
+                                       
+                                        else{
+                                            oInput = document.createElement('input');
+                                            oInput.type = "text";
+                                            oInput.className = "form-control";
+                                            oInput.name = "ncampo_"+id;
+                                            oInput.id = "idcampo_"+id;
+                                            //oInput.value = Math.random();
+                                            
+                                        }
+                                    
+                                        celda.appendChild(oInput);
+                                        renglon.appendChild(celda);
+                                        
+                                    }
+                                    tblBody.appendChild(renglon);
+                                    
+                                }
+
+                            }
+                        </script>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -90,6 +164,16 @@
 
                     </div>
                     <!-- /.card-body -->
+                    <script>
+                        /*function calcular(){
+                            var valor1 = parseFloat(document.getElementById('idcampo_6').value || 0);
+                            var valor2 = parseFloat(document.getElementById('idcampo_12').value || 0);
+                            var valor3 = parseFloat(document.getElementById('campana').value);
+
+                            document.getElementById('totalh').value = valor1+valor2+valor3;
+                        }*/
+               
+                    </script>
                 </div>
             </div>
         </div>
@@ -105,4 +189,5 @@
     </div>
     <!-- /.card -->
 </div>
+</body>
 {% endblock %}

@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'^detparte_horas/create/$', DetPhoras_Create.as_view(), name="DetPhorasCreate"),
     path('detparte_horas/edit/<int:pk>/', DetPhoras_Update.as_view(), name="DetPhorasUpdate"),
 
-    url(r'^actividades/create/$', Phoras_Create.as_view(), name="ParteCreate"),
+    url(r'^actividades/create/$', Parte_horas_create.as_view(), name="ParteCreate"),
 
     #pagina de principal
     url(r'^dashboard/$', DashboardView.as_view(), name="Dashboard"),

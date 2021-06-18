@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView,UpdateView
 
-from movil.forms import ParteHorasForm
+from movil.forms import ParteHorasForm 
 from movil.models import ParteHoras
 
 class Phoras_Lista(ListView):
@@ -19,7 +19,7 @@ class Phoras_Lista(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = OrdenTrabajo.objects.get(pk=request.POST['id']).toJSON()
+            data = ParteHoras.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)

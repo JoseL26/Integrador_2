@@ -1,6 +1,7 @@
 from crum import get_current_user
 from django.db import models
 
+
 # Create your models here.
 from django.forms import model_to_dict
 

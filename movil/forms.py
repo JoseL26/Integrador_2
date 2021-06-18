@@ -1,11 +1,8 @@
 from django import forms
-<<<<<<< HEAD
 from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField, CharField
 from django.utils.datetime_safe import datetime
-=======
 from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField
 from django.utils.datetime_safe import datetime, date
->>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
 from django.views.generic import FormView
 
 from .models import *
@@ -26,14 +23,12 @@ class FormularioEmpleado(ModelForm):
         widgets = {
             'Apellidos': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de categoria'
+                    'placeholder': 'Ingrese Apellidos'
                 }
             ),
             'Nombres': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese de Estado 1 o 0',
-                    'maxlength': '1',
-                    'aria-valuemax': '1'
+                    'placeholder': 'Ingrese Nombres'
                 }
             )
         }
@@ -400,14 +395,9 @@ class ParteHorasForm(ModelForm):
     class Meta:
         model = ParteHoras
         fields = '__all__'
-<<<<<<< HEAD
+
         labels = {
             'Estado': 'Estado'
-=======
-        labels ={
-            'fecha' : 'Fecha',
-            'TotalHoras' : 'Total Horas'
->>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
         }
 
         widgets = {
@@ -415,24 +405,21 @@ class ParteHorasForm(ModelForm):
                 'class': 'form-control select2',
                 'style': 'width: 100%'
             }),
-<<<<<<< HEAD
+
             'fecha': DateInput(format='%y-%m-%d', attrs={
                 'autocomplete': 'off',
                 'class': 'form-control datetimepicker-input',
                 'id': 'fecha',
                 'data-target': '#fecha',
                 'data-toggle': 'datetimepicker'
-=======
-            'Fecha': DateInput(format='%y-%m-%d', attrs={
-                'type': datetime.now().strftime('%y-%m-%d'),
->>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
-
             }),
 
-            'Total Horas': TextInput(
+            'TotalHoras': TextInput(
                 attrs={
                     'readonly': True,
+                    'id' : 'totalh',
                     'class': 'form-control'
+                                               
                 }
             )
         }
@@ -459,12 +446,12 @@ class ListaForm(Form):
     #     'placeholder': 'Ingrese una descripción'
     # }))
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
     # search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
     #    'class': 'form-control select2',
     #    'style': 'width: 100%'
     # }))
-=======
+#=======
     search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
         'class': 'form-control select2',
         'style': 'width: 100%'
@@ -519,4 +506,4 @@ class DetPHorasForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
->>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
+
