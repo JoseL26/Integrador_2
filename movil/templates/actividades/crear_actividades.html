@@ -44,7 +44,7 @@
                             <label>Buscador de equipos</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscar" placeholder="ingrese la descripción de equipo "
-                                       autocomplete="off" oninput="rinon()">
+                                       autocomplete="off">
                                 <span class="input-group-append">
                                     <button type="button" class="btn btn-info btn-flat">
                                         <i class="las la-times"></i>
@@ -69,6 +69,7 @@
                             </tbody>
                         </table>
                         <script>
+                            //evento para sumar las horas
                             function calcular(){
                                 var valor1 = parseFloat(document.getElementById('idcampo_6').value || 0);
                                 var valor2 = parseFloat(document.getElementById('idcampo_12').value || 0);
@@ -79,7 +80,7 @@
 
                                 document.getElementById('totalh').value = valor1+valor2+valor3+valor4+valor5+valor6;
                             }
-
+                            //creacion de las filas vas viendo si lo modificas de acuerdo a algún Form
                             function fnCreateTabla(renglones, columnas){
                                 var tblBody = document.getElementById('data').getElementsByTagName('tbody')[0];
                                 var renglon = document.createElement('tr');
@@ -124,7 +125,7 @@
                                             oInput.className = "form-control";
                                             oInput.name = "ncampo_"+id;
                                             oInput.id = "idcampo_"+id;
-                                            //oInput.value = Math.random();
+                                            
                                             
                                         }
                                     
