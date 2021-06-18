@@ -1,9 +1,13 @@
+from crum import get_current_user
 from django.db import models
 
 # Create your models here.
 from django.forms import model_to_dict
 
-class Categoria(models.Model):
+from lista.models import BaseModelo
+
+
+class Categoria(BaseModelo):
     Descripcion = models.CharField(max_length=40, unique=True)
     Estado = models.IntegerField(default=1)
 
@@ -13,6 +17,16 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.Descripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.usuario_autor = user
+            else:
+                self.usuario_modificador = user
+        super(Categoria, self).save()
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -122,6 +136,8 @@ class Equipo(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['CaterogiaEq'] = self.CaterogiaEq.toJSON()
+        item['Marca'] = self.Marca.toJSON()
         return item
 
 class OrdenTrabajo(models.Model):

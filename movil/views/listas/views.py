@@ -20,15 +20,15 @@ class TestView(TemplateView):
         data = {}
         try:
             action = request.POST['action']
-            if action == 'search_CaterogiaEquipo_id':
-                data = [{'id': '', 'text': '------------'}]
-                for i in Equipo.objects.filter(cat_id=request.POST['id']):
-                    data.append({'id': i.Cod_equipo, 'text': i.Desc_equipo, 'data': i.CaterogiaEq.toJSON()})
-            elif action == 'autocomplete':
-                data = []
-                for i in Categoria.objects.filter(name__icontains=request.POST['term'])[0:10]:
+            if action == 'buscar_equipo_id':
+                data =[]
+                for i in Equipo.objects.filter(CaterogiaEq_id=request.POST['id']):
+                    data.append({'id': i.id, 'Cod_equipo': i.Cod_equipo})
+            elif action =='autocomplete':
+                data =[]
+                for i in CaterogiaEquipo.objects.filter(Desc_categoria__icontains=request.POST['term'])[0:10]:
                     item = i.toJSON()
-                    item['text'] = i.name
+                    item['value'] = i.Desc_categoria
                     data.append(item)
             else:
                 data['error'] = 'Ha ocurrido un error'

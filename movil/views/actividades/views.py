@@ -7,8 +7,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
 from movil.forms import ParteHorasForm
-from movil.models import ParteHoras
-
+from movil.models import ParteHoras, Equipo
 
 
 class Parte_horas_lis(ListView):
@@ -51,18 +50,26 @@ class Parte_horas_create(CreateView):
     permission_required = "movil.add_actividades"
     url_redirect = success_url
 
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         data = {}
         try:
             action = request.POST['action']
-            if action == 'add':
-                form = self.get_form()
-                data = form.save()
+            if action == 'buscar_productos':
+                data =[]
+                equipo = Equipo.objects.filter(Cod_equipo__icontains=request.POST['term'])
+                for i in equipo:
+                    item = i.toJSON()
+                    item['value'] = i.Cod_equipo
+                    data.append(item)
             else:
                 data['error'] = 'no ha ingresado ninguna opcion'
         except Exception as e:
             data['error'] = str(e)
-        return JsonResponse(data)
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

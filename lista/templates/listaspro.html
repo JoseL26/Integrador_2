@@ -25,139 +25,100 @@
                     {{ form.categorias }}
                 </div>
                 <div class="form-group">
-                    <label>Productos:</label>
+                    <label>Equipos:</label>
                     {{ form.equipos }}
                 </div>
                 <div class="form-group">
                     <label>Buscador:</label>
-                    {{ form.search }}
+                    {{ form.buscar }}
                 </div>
             </div>
         </div>
     </form>
     <script type="application/javascript">
-        var select_products = $('select[name="equipos"]');
-        $(function () {
-
-            $('.select2').select2({
-                theme: "bootstrap4",
-                language: 'es'
-            });
-
-            $('select[name="categorias"]').on('change', function () {
-                var id = $(this).val();
-                var options = '<option value="">--------------------</option>';
-                if (id === '') {
-                    select_products.html(options);
+    $(function(){
+        $('select[name="categorias"]').on('change', function(){
+            var id = $(this).val();
+            var select_prod = $('select[name="equipos"]');
+            var opciones = '<option value="">--------------------</option>';
+            if (id === '') {
+                select_prod.html(opciones);
+                return false;
+            }
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'buscar_equipo_id',
+                    'id': id
+                },
+                dataType: 'json'
+            }).done(function (data) {
+                if (!data.hasOwnProperty('error')) {
+                    $.each(data, function (key, value) {
+                        opciones += '<option value="' + value.id + '">' + value.Cod_equipo + '</option>';
+                    });
                     return false;
                 }
-                $.ajax({
-                    url: window.location.pathname,
-                    type: 'POST',
-                    data: {
-                        'action': 'search_CaterogiaEquipo_id',
-                        'id': id
-                    },
-                    dataType: 'json',
-                }).done(function (data) {
-                    if (!data.hasOwnProperty('error')) {
-                        select_products.html('').select2({
-                            theme: "bootstrap4",
-                            language: 'es',
-                            data: data
-                        });
-                        /*$.each(data, function (key, value) {
-                            options += '<option value="' + value.Cod_equipo + '">' + value.Desc_equipo + '</option>';
-                        });*/
-                        return false;
-                    }
                     message_error(data.error);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     alert(textStatus + ': ' + errorThrown);
                 }).always(function (data) {
-                    //select_products.html(options);
+                    select_prod.html(opciones);
                 });
-            });
 
-            select_products.on('change', function () {
-                var value = select_products.select2('data')[0];
-                console.log(value);
-            });
 
-            var availableTags = [
-                "ActionScript",
-                "AppleScript",
-                "Asp",
-                "BASIC",
-                "C",
-                "C++",
-                "Clojure",
-                "COBOL",
-                "ColdFusion",
-                "Erlang",
-                "Fortran",
-                "Groovy",
-                "Haskell",
-                "Java",
-                "JavaScript",
-                "Lisp",
-                "Perl",
-                "PHP",
-                "Python",
-                "Ruby",
-                "Scala",
-                "Scheme"
-            ];
-
-            $('input[name="search"]').autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: window.location.pathname,
-                        type: 'POST',
-                        data: {
-                            'action': 'autocomplete',
-                            'term': request.term
-                        },
-                        dataType: 'json',
-                    }).done(function (data) {
-                        response(data);
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        //alert(textStatus + ': ' + errorThrown);
-                    }).always(function (data) {
-
-                    });
-                },
-                delay: 500,
-                minLength: 1,
-                select: function (event, ui) {
-                    console.log(ui.item);
-                }
-            });
-
-            $('select[name="search"]').select2({
-                theme: "bootstrap4",
-                language: 'es',
-                allowClear: true,
-                ajax: {
-                    delay: 250,
-                    type: 'POST',
-                    url: window.location.pathname,
-                    data: function (params) {
-                        var queryParameters = {
-                            term: params.term,
-                            action: 'autocomplete'
-                        }
-                        return queryParameters;
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: data
-                        };
-                    },
-                },
-                placeholder: 'Ingrese una descripción',
-                minimumInputLength: 1,
-            });
         });
+
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $('input[name="buscar"]').autocomplete({
+           source: function(request, response){
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'autocomplete',
+                        'term': request.term
+                    },
+                    dataType: 'json'
+                }).done(function (data) {
+                    response(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    //alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+
+                });
+           },
+           delay: 500,
+           minLength: 1,
+           select: function(event, ui){
+            console.log(ui.item);
+           }
+        });
+
+    });
     </script>
 {% endblock %}

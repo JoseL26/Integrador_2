@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -7,16 +8,19 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, F
 from django.utils.decorators import method_decorator
 
 from movil.forms import CategoriaForm
+from movil.mixin import isSuperusermixin, ValidatePermissionRequiredMixin
 from movil.models import Categoria
 
-class Categori_Lista(ListView):
+class Categori_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'movil.change_Categoria'
     model = Categoria
     template_name = 'categoria/categoria_lista.html'
 
     @method_decorator(csrf_exempt)
-    @method_decorator(login_required)
+    #@method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
 
     def post(self, request, *args, **kwargs):
         data = {}

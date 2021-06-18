@@ -2,12 +2,22 @@
 
 {% load static %}
 {% block head_list %}
+    <!--autocomplet-->
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    <!--para fecha-->
     <script src="{% static 'lib/plugins/moment/moment-with-locales.js' %}"></script>
     <script src="{% static 'lib/plugins/tempus/tempusdominus-bootstrap-4.min.js' %}"></script>
     <link href="{% static 'lib/plugins/tempus/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>
 
     <link href="{% static 'lib/plugins/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/plugins/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+    <script src="{% static 'horas/horas.js' %}"></script>
+
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -30,11 +40,13 @@
                         <div class="form-group">
                             <label>Buscador de equipos</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="ingrese la descripción de equipo "
+                                <input type="text" class="form-control" name="buscar" placeholder="ingrese la descripción de equipo "
                                        autocomplete="off">
                                 <span class="input-group-append">
-                      <button type="button" class="btn btn-info btn-flat">Go!</button>
-                    </span>
+                                    <button type="button" class="btn btn-info btn-flat">
+                                        <i class="las la-times"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                         <hr>
@@ -63,18 +75,18 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                    <div class="form-group">
-                        <label>Empleado:</label>
-                        {{form.Empleado}}
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha:</label>
-                        {{form.fecha}}
-                    </div>
-                    <div class="form-group">
-                        <label>Total:</label>
-                        {{form.TotalHoras}}
-                    </div>
+                        <div class="form-group">
+                            <label>Empleado:</label>
+                            {{form.Empleado}}
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha:</label>
+                            {{form.fecha}}
+                        </div>
+                        <div class="form-group">
+                            <label>Total:</label>
+                            {{form.TotalHoras}}
+                        </div>
 
                     </div>
                     <!-- /.card-body -->
@@ -85,10 +97,10 @@
     </div>
     <div class="card-footer">
         <a class="btn btn-primary btn-flat " id="btnText">
-            <i class="fas fa-plus"></i> Nuevo registro
+            <i class="las la-save"></i> Guardar Registro
         </a>
         <a href="" class="btn btn-succes">
-            <i class="fas fa-plus"></i> Cancelar
+            <i class="las la-times"></i> Cancelar
         </a>
     </div>
     <!-- /.card -->
