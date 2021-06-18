@@ -1,6 +1,11 @@
 from django import forms
+<<<<<<< HEAD
 from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField, CharField
 from django.utils.datetime_safe import datetime
+=======
+from django.forms import ModelForm, TextInput, DateInput, Select, Form, ModelChoiceField
+from django.utils.datetime_safe import datetime, date
+>>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
 from django.views.generic import FormView
 
 from .models import *
@@ -395,8 +400,14 @@ class ParteHorasForm(ModelForm):
     class Meta:
         model = ParteHoras
         fields = '__all__'
+<<<<<<< HEAD
         labels = {
             'Estado': 'Estado'
+=======
+        labels ={
+            'fecha' : 'Fecha',
+            'TotalHoras' : 'Total Horas'
+>>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
         }
 
         widgets = {
@@ -404,16 +415,21 @@ class ParteHorasForm(ModelForm):
                 'class': 'form-control select2',
                 'style': 'width: 100%'
             }),
+<<<<<<< HEAD
             'fecha': DateInput(format='%y-%m-%d', attrs={
                 'autocomplete': 'off',
                 'class': 'form-control datetimepicker-input',
                 'id': 'fecha',
                 'data-target': '#fecha',
                 'data-toggle': 'datetimepicker'
+=======
+            'Fecha': DateInput(format='%y-%m-%d', attrs={
+                'type': datetime.now().strftime('%y-%m-%d'),
+>>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
 
             }),
 
-            'TotalHoras': TextInput(
+            'Total Horas': TextInput(
                 attrs={
                     'readonly': True,
                     'class': 'form-control'
@@ -443,7 +459,64 @@ class ListaForm(Form):
     #     'placeholder': 'Ingrese una descripción'
     # }))
 
+<<<<<<< HEAD
     # search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
     #    'class': 'form-control select2',
     #    'style': 'width: 100%'
     # }))
+=======
+    search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
+
+class DetPHorasForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # for form in self.visible_fields():
+        #    form.field.widget.attrs['class'] = 'form-control'
+        #    form.field.widget.attrs['autocomplete'] = 'off'
+        self.fields['operacion'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = DetalleParte
+        fields = '__all__'
+        labels = {
+            'NumParte' : 'Num Parte',
+            'Orden' : 'Orden',
+            'operacion' : 'Operacion',
+            'desc_actividad' : 'Descripcion',
+            'Cantidad' : 'Cantidad' 
+        }
+        widgets = {
+            'Num Parte': TextInput(attrs={
+                'placeholder': 'Ingrese una descripcion'
+            }),
+            'Orden': TextInput(attrs={
+                'placeholder': 'Ingrese una descripcion'
+            }),
+            'Operacion': TextInput(attrs={
+                'placeholder': 'Ingrese una descripcion'
+            }),
+            'Descripcion': TextInput(attrs={
+                'placeholder': 'Ingrese una descripcion'
+                }
+            ),
+            'Cantidad': TextInput(attrs={
+                'placeholder': 'Ingrese una descripcion'
+                }
+            )
+        }
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+>>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76

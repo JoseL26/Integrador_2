@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                    <a href="{% url 'index' %}" class="nav-link"><i class="las la-home"></i> Home</a>
                 </li>
                 <!--menu de mantenimiento-->
                 <li class="nav-item dropdown">
@@ -29,7 +29,7 @@
                         <li><a href="{% url 'movil:CategoriaListEq' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Categoria equipos</a></li>
                         <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Conjuntos componentes</a></li>
                         <li><a href="{% url 'movil:ListaEmpleado' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Empleados</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Horarios</a></li>
+                        <li><a href="{% url 'movil:PhorasList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Horarios</a></li>
                         <li><a href="{% url 'movil:OrdenList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Orden de trabajo</a></li>
 
 
@@ -45,11 +45,14 @@
                 </li>
                 <!--termina menu-->
             </ul>
+            
         </div>
         <!--navbar-->
+
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
+<<<<<<< HEAD
                     <i class="las la-users-cog"></i>
                     {{ request.user.username }}
                 </a>
@@ -57,6 +60,14 @@
                     <span class="dropdown-header" style="font-size: 12px;">
                         Su ultimo acceso fue {{ request.user.last_login }}
                     </span>
+=======
+                    <i class="las la-user"></i>
+                    
+                    {{ request.user.username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-header" style="font-size: 12px;">{{ request.user.username }}</span>
+>>>>>>> fb15e454d28a5234025a13590fa8d04beb4f4b76
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="las la-envelope mr-2"></i> Editar perfil

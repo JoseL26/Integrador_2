@@ -196,5 +196,13 @@ class DetalleParte(models.Model):
     desc_actividad = models.CharField(max_length=100, blank=True)
     Cantidad = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
+    class Meta:
+        ordering = ["operacion"]
+        verbose_name_plural = "DetallePartes"
+
     def __str__(self):
-        return self.NumParte
+        return self.operacion
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item

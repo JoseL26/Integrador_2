@@ -1,16 +1,16 @@
-from movil.forms import FormularioEmpleado
-from movil.models import Categoria, Empleado
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
-from datetime import *
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, CreateView,UpdateView
 
-class Empleado_Lista(ListView):
-    model = Empleado
-    template_name = 'empleado/lista_empleado.html'
+from movil.forms import ParteHorasForm
+from movil.models import ParteHoras
+
+class Phoras_Lista(ListView):
+    model = ParteHoras
+    template_name = 'parte_horas/lista_phoras.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -19,7 +19,7 @@ class Empleado_Lista(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = Empleado.objects.get(pk=request.POST['id']).toJSON()
+            data = OrdenTrabajo.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
@@ -27,17 +27,17 @@ class Empleado_Lista(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Listado de empleados'
-        context['create_url'] = reverse_lazy('movil:Crear_Empleado')
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
-        context['entity'] = 'Empleados'
+        context['titulo'] = 'Listado de Parte de Horas'
+        context['create_url'] = reverse_lazy('movil:PhorasCreate')
+        context['list_url'] = reverse_lazy('movil:PhorasList')
+        context['entity'] = 'ParteHoras'
         return context
 
-class Empleado_Create(CreateView):
-    model = Empleado
-    form_class = FormularioEmpleado
-    template_name = 'empleado/empleado.html'
-    success_url = reverse_lazy('movil:ListaEmpleado')
+class Phoras_Create(CreateView):
+    model = ParteHoras
+    form_class = ParteHorasForm
+    template_name = 'parte_horas/crear_phoras.html'
+    success_url = reverse_lazy('movil:PhorasList')
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -55,17 +55,17 @@ class Empleado_Create(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Registro de empleados'
-        context['entity'] = 'Empleados'
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
+        context['titulo'] = 'Registro de Parte de Horas'
+        context['entity'] = 'ParteHoras'
+        context['list_url'] = reverse_lazy('movil:PhorasList')
         context['action'] = 'add'
         return context
 
-class Empleado_Update(UpdateView):
-    model = Empleado
-    form_class = FormularioEmpleado
-    template_name = 'empleado/empleado.html'
-    success_url = reverse_lazy('movil:ListaEmpleado')
+class Phoras_Update(UpdateView):
+    model = ParteHoras
+    form_class = ParteHorasForm
+    template_name = 'parte_horas/crear_phoras.html'
+    success_url = reverse_lazy('movil:PhorasList')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -87,8 +87,8 @@ class Empleado_Update(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['titulo'] = 'Edición de empleado'
-        context['entity'] = 'Empleados'
-        context['list_url'] = reverse_lazy('movil:ListaEmpleado')
+        context['titulo'] = 'Edición de Parte de Horas'
+        context['entity'] = 'ParteHoras'
+        context['list_url'] = reverse_lazy('movil:PhorasList')
         context['action'] = 'edit'
         return context
