@@ -19,7 +19,7 @@ class DetPhoras_Lista(ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            data = OrdenTrabajo.objects.get(pk=request.POST['id']).toJSON()
+            data = DetalleParte.objects.get(pk=request.POST['id']).toJSON()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)

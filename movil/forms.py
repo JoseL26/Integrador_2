@@ -477,12 +477,7 @@ class DetPHorasForm(ModelForm):
             'Cantidad' : 'Cantidad' 
         }
         widgets = {
-            'Num Parte': TextInput(attrs={
-                'placeholder': 'Ingrese una descripcion'
-            }),
-            'Orden': TextInput(attrs={
-                'placeholder': 'Ingrese una descripcion'
-            }),
+            
             'Operacion': TextInput(attrs={
                 'placeholder': 'Ingrese una descripcion'
             }),
@@ -490,10 +485,7 @@ class DetPHorasForm(ModelForm):
                 'placeholder': 'Ingrese una descripcion'
                 }
             ),
-            'Cantidad': TextInput(attrs={
-                'placeholder': 'Ingrese una descripcion'
-                }
-            )
+            
         }
     def save(self, commit=True):
         data = {}

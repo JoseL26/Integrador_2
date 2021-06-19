@@ -27,7 +27,7 @@ class Parte_horas_lis(ListView):
                 for i in ParteHoras.objects.all():
                     data.append(i.toJSON())
             else:
-                data['error'] = 'a ocurrido un error'
+                data['error'] = 'ha ocurrido un error'
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)
