@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 
-from movil.views.actividades.views import Parte_horas_create
+from movil.views.actividades.views import *
 from movil.views.cargo.views import *
 from movil.views.categoria.views import *
 from movil.views.categoria_equipo.views import *
@@ -11,9 +11,7 @@ from movil.views.equipo.views import *
 from movil.views.listas.views import TestView
 from movil.views.marca.views import *
 from movil.views.orden_trabajo.views import *
-from movil.views.usuario.views import *
-from movil.views.parte_horas.views import *
-from movil.views.det_phoras.views import *
+
 
 app_name = 'movil'
 
@@ -42,24 +40,15 @@ urlpatterns = [
     url(r'^orden_trabajo/create/$', OrdenCreate.as_view(), name="OrdenCreate"),
     path('orden_trabajo/edit/<int:pk>/', OrdenUpdate.as_view(), name="update_orden"),
 
-    url(r'^parte_horas/lista/$', Phoras_Lista.as_view(), name="PhorasList"),
-    url(r'^parte_horas/create/$', Phoras_Create.as_view(), name="PhorasCreate"),
-    path('parte_horas/edit/<int:pk>/', Phoras_Update.as_view(), name="PhorasUpdate"),
-
-    url(r'^detparte_horas/lista/$', DetPhoras_Lista.as_view(), name="DetPhorasList"),
-    url(r'^detparte_horas/create/$', DetPhoras_Create.as_view(), name="DetPhorasCreate"),
-    path('detparte_horas/edit/<int:pk>/', DetPhoras_Update.as_view(), name="DetPhorasUpdate"),
-
+    #parte de horas
+    url(r'^actividades/lista/$', Parte_horas_list.as_view(), name="PhorasList"),
     url(r'^actividades/create/$', Parte_horas_create.as_view(), name="ParteCreate"),
+    path('actividades/delete/<int:pk>/', Parte_horas_delete.as_view(), name="Partedelete"),
+    path('actividades/edit/<int:pk>/', Parte_horas_update.as_view(), name="Parteupdate"),
+    path('actividades/imprimir/pdf/<int:pk>/', generarPDF_parte.as_view(), name="Pdfgenerate"),
 
     #pagina de principal
     url(r'^dashboard/$', DashboardView.as_view(), name="Dashboard"),
     #listados
     url(r'^listas/$', TestView.as_view(), name="test"),
-
-    url(r'^usuario/lista/$', Usuario_Lista.as_view(), name="UsuarioList"),
-    url(r'^usuario/create/$', UsuarioCreate.as_view(), name="UsuarioCreate"),
-    path('usuario/edit/<int:pk>/', UsuarioUpdate.as_view(), name="Usuario_Update"),
-    #url(r'^usuario/login/$', name="UsuarioList"),
-
 ]

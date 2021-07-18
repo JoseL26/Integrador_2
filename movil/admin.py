@@ -17,5 +17,5 @@ class CategoriaAdmin(admin.ModelAdmin):
 admin.site.register(Cargo, CargoAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Empleado, EmpleadoAdmin)
-admin.site.register(ParteHoras)
-admin.site.register(DetalleParte)
+
+

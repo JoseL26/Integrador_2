@@ -1,5 +1,6 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from movil.mixin import ValidatePermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -9,7 +10,8 @@ from movil.forms import CargoForm
 from movil.models import Cargo
 
 
-class Cargo_Lista(ListView):
+class Cargo_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'view_cargo'
     model = Cargo
     template_name = 'cargo/cargo_lista.html'
 
@@ -35,7 +37,8 @@ class Cargo_Lista(ListView):
         return context
 
 
-class CargoCreate(CreateView):
+class CargoCreate(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_cargo'
     model = Cargo
     form_class = CargoForm
     template_name = 'cargo/cargo_crear.html'
@@ -63,7 +66,8 @@ class CargoCreate(CreateView):
         context['action'] = 'add'
         return context
 
-class CargoUpdate(UpdateView):
+class CargoUpdate(LoginRequiredMixin,ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_cargo'
     model = Cargo
     form_class = CargoForm
     template_name = 'cargo/cargo_crear.html'

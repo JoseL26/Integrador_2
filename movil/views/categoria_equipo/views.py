@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from movil.mixin import ValidatePermissionRequiredMixin
+
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
@@ -9,7 +11,8 @@ from django.utils.decorators import method_decorator
 from movil.forms import CategiaEquipoForm
 from movil.models import CaterogiaEquipo
 
-class Categori_Lista_Equipo(ListView):
+class Categori_Lista_Equipo(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'view_caterogiaequipo'
     model = CaterogiaEquipo
     template_name = 'categoria_equipo/listar_cat_equipo.html'
 
@@ -35,7 +38,8 @@ class Categori_Lista_Equipo(ListView):
         return context
 
 
-class CategoriaCreateEq(CreateView):
+class CategoriaCreateEq(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_caterogiaequipo'
     model = CaterogiaEquipo
     form_class = CategiaEquipoForm
     template_name = 'categoria/crear_categoria.html'
@@ -63,7 +67,8 @@ class CategoriaCreateEq(CreateView):
         context['action'] = 'add'
         return context
 
-class CategoriaUpdateEq(UpdateView):
+class CategoriaUpdateEq(LoginRequiredMixin,ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_caterogiaequipo'
     model = CaterogiaEquipo
     form_class = CategiaEquipoForm
     template_name = 'categoria/crear_categoria.html'

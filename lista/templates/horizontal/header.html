@@ -1,12 +1,12 @@
 {% load static %}
 <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
         <a href="#" class="navbar-brand">
             <img src="{% static 'imagen/logo.png' %}" alt="AdminLTE Logo"
                  class="brand-image"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Hades</span>
+            <span class="brand-text font-weight-light">Control de actividades</span>
         </a>
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,34 +22,64 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Mantenimientos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="{% url 'movil:ParteCreate' %}" class="dropdown-item"><i class="fas fa-truck-loading"></i> Actividades</a></li>
-                        <li><a href="{% url 'movil:Cargolist' %}" class="dropdown-item"><i class="fas fa-boxes"></i> Cargos</a></li>
-                        <li><a href="{% url 'movil:CategoriaList' %}" class="dropdown-item"><i class="fas fa-users"></i> Categorias</a></li>
-                        <li><a href="{% url 'movil:Lista_Equipo' %}" class="dropdown-item"><i class="fas fa-users"></i> Equipos</a></li>
-                        <li><a href="{% url 'movil:CategoriaListEq' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Categoria equipos</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Conjuntos componentes</a></li>
-                        <li><a href="{% url 'movil:ListaEmpleado' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Empleados</a></li>
-                        <li><a href="{% url 'movil:PhorasList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Horarios</a></li>
-                        <li><a href="{% url 'movil:OrdenList' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Orden de trabajo</a></li>
-
-
-
+                        <li><a href="{% url 'movil:ParteCreate' %}" class="dropdown-item"><i
+                                class="fas fa-truck-loading"></i> Actividades</a></li>
+                        <li><a href="{% url 'movil:Cargolist' %}" class="dropdown-item"><i class="fas fa-boxes"></i>
+                            Cargos</a></li>
+                        <li><a href="{% url 'movil:CategoriaList' %}" class="dropdown-item"><i class="fas fa-users"></i>
+                            Categorias</a></li>
+                        <li><a href="{% url 'movil:Lista_Equipo' %}" class="dropdown-item"><i class="fas fa-users"></i>
+                            Equipos</a></li>
+                        <li><a href="{% url 'movil:CategoriaListEq' %}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i> Categoria equipos</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Conjuntos componentes</a>
+                        </li>
+                        <li><a href="{% url 'movil:ListaEmpleado' %}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i> Empleados</a></li>
+                        <li><a href="{% url 'movil:PhorasList' %}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i> Lista actividad</a></li>
+                        <li><a href="{% url 'movil:OrdenList' %}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i> Orden de trabajo</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Utilitarios</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="{% url 'movil:UsuarioList' %}" class="dropdown-item"><i class="fas fa-truck-loading"></i> Usuarios</a></li>
+                        <li><a href="{% url 'UserList' %}" class="dropdown-item"><i
+                                class="fas fa-truck-loading"></i> Usuarios</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Reportes</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                        <li><a href="{% url 'Reporte_act' %}" class="dropdown-item"><i
+                                class="fas fa-truck-loading"></i> Reporte de actividades</a></li>
                     </ul>
                 </li>
                 <!--termina menu-->
             </ul>
-            
         </div>
         <!--navbar-->
-
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            {% if request.user.groups.all %}
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu4" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link{% if request.user.groups.all.count > 1 %} dropdown-toggle{% endif %}">{{ request.session.group }}</a>
+                    {% if request.user.groups.all.count > 1 %}
+                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow"
+                            style="left: 0px; right: inherit;">
+                            {% for g in request.user.groups.all %}
+                                {% if g.id != request.session.group.id %}
+                                 <li><a href="{% url 'User_group_change' g.id %}" class="dropdown-item">{{ g.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endif %}
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="las la-users-cog"></i>
@@ -59,12 +89,7 @@
                     <span class="dropdown-header" style="font-size: 12px;">
                         Su ultimo acceso fue {{ request.user.last_login }}
                     </span>
-
-                    <i class="las la-user"></i>
-                    
-                    {{ request.user.username }}
-                
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-divider"></div>
                     <span class="dropdown-header" style="font-size: 12px;">{{ request.user.username }}</span>
 
                     <div class="dropdown-divider"></div>
@@ -84,16 +109,16 @@
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item dropdown-footer">Notificaciones</a>
+
                 </div>
-            
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">
                     <i class="las la-power-off" aria-hidden="true"></i>
                     Cerrar sesión
                 </a>
             </li>
-        
+        </ul>
         <!-- fin navbar-->
     </div>
-  </nav>
-  <!-- /.navbar -->
+</nav>
+<!-- /.navbar -->

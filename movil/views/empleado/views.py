@@ -1,14 +1,17 @@
 from movil.forms import FormularioEmpleado
 from movil.models import Categoria, Empleado
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from movil.mixin import ValidatePermissionRequiredMixin
+
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
 from datetime import *
 
-class Empleado_Lista(ListView):
+class Empleado_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'view_empleado'
     model = Empleado
     template_name = 'empleado/lista_empleado.html'
 
@@ -33,7 +36,8 @@ class Empleado_Lista(ListView):
         context['entity'] = 'Empleados'
         return context
 
-class Empleado_Create(CreateView):
+class Empleado_Create(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_empleado'
     model = Empleado
     form_class = FormularioEmpleado
     template_name = 'empleado/empleado.html'
@@ -61,7 +65,8 @@ class Empleado_Create(CreateView):
         context['action'] = 'add'
         return context
 
-class Empleado_Update(UpdateView):
+class Empleado_Update(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_empleado'
     model = Empleado
     form_class = FormularioEmpleado
     template_name = 'empleado/empleado.html'

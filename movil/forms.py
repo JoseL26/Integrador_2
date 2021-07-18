@@ -387,7 +387,7 @@ class UsuarioForm(ModelForm):
         return data
 
 
-# formulario de categoria
+# formulario de parte de horas
 class ParteHorasForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -406,20 +406,23 @@ class ParteHorasForm(ModelForm):
                 'style': 'width: 100%'
             }),
 
-            'fecha': DateInput(format='%y-%m-%d', attrs={
-                'autocomplete': 'off',
-                'class': 'form-control datetimepicker-input',
-                'id': 'fecha',
-                'data-target': '#fecha',
-                'data-toggle': 'datetimepicker'
-            }),
+            'fecha': DateInput(
+                format='%Y-%m-%d',
+                attrs={
+                    'value': datetime.now().strftime('%Y-%m-%d'),
+                    'autocomplete': 'off',
+                    'class': 'form-control datetimepicker-input',
+                    'id': 'fecha',
+                    'data-target': '#fecha',
+                    'data-toggle': 'datetimepicker'
+                }),
 
             'TotalHoras': TextInput(
                 attrs={
                     'readonly': True,
-                    'id' : 'totalh',
+                    'id': 'totalh',
                     'class': 'form-control'
-                                               
+
                 }
             )
         }
@@ -446,12 +449,11 @@ class ListaForm(Form):
     #     'placeholder': 'Ingrese una descripción'
     # }))
 
-#<<<<<<< HEAD
     # search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
     #    'class': 'form-control select2',
     #    'style': 'width: 100%'
     # }))
-#=======
+
     search = ModelChoiceField(queryset=Equipo.objects.none(), widget=Select(attrs={
         'class': 'form-control select2',
         'style': 'width: 100%'
@@ -467,14 +469,14 @@ class DetPHorasForm(ModelForm):
         self.fields['operacion'].widget.attrs['autofocus'] = True
 
     class Meta:
-        model = DetalleParte
+        model = DetParte
         fields = '__all__'
         labels = {
-            'NumParte' : 'Num Parte',
-            'Orden' : 'Orden',
-            'operacion' : 'Operacion',
-            'desc_actividad' : 'Descripcion',
-            'Cantidad' : 'Cantidad' 
+            'NumParte': 'Num Parte',
+            'Orden': 'Orden',
+            'operacion': 'Operacion',
+            'desc_actividad': 'Descripcion',
+            'Cantidad': 'Cantidad'
         }
         widgets = {
             'Num Parte': TextInput(attrs={
@@ -488,13 +490,14 @@ class DetPHorasForm(ModelForm):
             }),
             'Descripcion': TextInput(attrs={
                 'placeholder': 'Ingrese una descripcion'
-                }
+            }
             ),
             'Cantidad': TextInput(attrs={
                 'placeholder': 'Ingrese una descripcion'
-                }
+            }
             )
         }
+
     def save(self, commit=True):
         data = {}
         form = super()
@@ -506,4 +509,3 @@ class DetPHorasForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
-

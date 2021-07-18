@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-crearpdf {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #crearpdf thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #crearpdf thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #crearpdf tbody tr {
+        padding: 0;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+</style>
+<body>
+<img src="{{ icon }}" class="img-crearpdf">
+<p class="head">
+    {{ emp.name|upper }}<br>
+    {{ emp.ruc }}<br>
+    {{ emp.direccion|upper }}
+</p>
+<p>
+    <b>PARTE DE HORAS:</b> {{ Phora.id }}<br>
+    <b>FECHA DE TRABAJO:</b> {{ Phora.fecha }}<br>
+    <b>EMPLEADO:</b> {{ Phora.Empleado.Nombres|upper }}<br>
+    <b>CARGO:</b> {{ Phora.Empleado.DNI }}<br>
+</p>
+<table id="crearpdf">
+    <thead>
+    <tr>
+        <th style="width: 20%;">ORDEN</th>
+        <th style="width: 20%;">EQUIPO</th>
+        <th style="width: 10%;">OPERACION</th>
+        <th style="width: 35%;">DESCIPCION ACT.</th>
+        <th style="width: 15%;">CANTIDAD HORAS</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for d in Phora.detparte_set.all %}
+        <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
+            <td>{{ d.Orden.Orden }}</td>
+            <td>{{ d.Orden.equipo.Cod_equipo }}</td>
+            <td class="text-center">{{ d.operacion }}</td>
+            <td class="text-center">{{ d.desc_actividad }}</td>
+            <td style="text-align: right;">{{ d.Cantidad }}</td>
+        </tr>
+    {% endfor %}
+    <tr style="border-top: 1px solid black; padding-top: 4px;">
+        <td colspan="4"><b>TOTAL HORAS</b></td>
+        <td style="text-align: right">{{ Phora.TotalHoras }}</td>
+    </tr>
+    </tbody>
+</table>
+<table style="margin-top: 250px;">
+    <thead>
+    <tr>
+        <th>****GRACIAS POR SU REGISTRAR TU ACTIVIDAD****</th>
+    </tr>
+    <tr>
+        <th>SI TIENES OBSERVACIONES PUEDES CORREGIR</th>
+    </tr>
+    </thead>
+</table>
+
+</body>
+</html>

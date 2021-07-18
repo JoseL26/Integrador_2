@@ -1,14 +1,17 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from movil.mixin import ValidatePermissionRequiredMixin
+
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView,UpdateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from movil.forms import OrdenTrabajoForm
 from movil.models import OrdenTrabajo
 
-class Orden_Lista(ListView):
+class Orden_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'view_ordentrabajo'
     model = OrdenTrabajo
     template_name = 'orden_de_trabajo/listar_orden.html'
 
@@ -33,7 +36,8 @@ class Orden_Lista(ListView):
         context['entity'] = 'Ordenes'
         return context
 
-class OrdenCreate(CreateView):
+class OrdenCreate(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_ordentrabajo'
     model = OrdenTrabajo
     form_class = OrdenTrabajoForm
     template_name = 'orden_de_trabajo/crear_orden.html'
@@ -61,7 +65,8 @@ class OrdenCreate(CreateView):
         context['action'] = 'add'
         return context
 
-class OrdenUpdate(UpdateView):
+class OrdenUpdate(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_ordentrabajo'
     model = OrdenTrabajo
     form_class = OrdenTrabajoForm
     template_name = 'orden_de_trabajo/crear_orden.html'

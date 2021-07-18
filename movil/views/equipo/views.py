@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from movil.mixin import ValidatePermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
@@ -9,7 +10,8 @@ from django.utils.decorators import method_decorator
 from movil.forms import EquipoForm
 from movil.models import Equipo
 
-class Lista_Equipo(ListView):
+class Lista_Equipo(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    permission_required = 'view_equipo'
     model = Equipo
     template_name = 'equipo/lista_equipo.html'
 
@@ -35,7 +37,8 @@ class Lista_Equipo(ListView):
         return context
 
 
-class Create_Equipo(CreateView):
+class Create_Equipo(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_equipo'
     model = Equipo
     form_class = EquipoForm
     template_name = 'equipo/crear_equipo.html'
@@ -63,7 +66,8 @@ class Create_Equipo(CreateView):
         context['action'] = 'add'
         return context
 
-class Update_Equipo(UpdateView):
+class Update_Equipo(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_equipo'
     model = Equipo
     form_class = EquipoForm
     template_name = 'equipo/crear_equipo.html'

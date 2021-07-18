@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'login',
     'user',
     'paginainicio',
+    'reportes',
     #libreria
     'widget_tweaks',
 ]
@@ -128,6 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -143,9 +146,12 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'user.User'
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "mpc.629@gmail.com"
 EMAIL_HOST_PASSWORD = "P@bL0&mO1$3$"
+

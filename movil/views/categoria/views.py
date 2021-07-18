@@ -12,7 +12,7 @@ from movil.mixin import isSuperusermixin, ValidatePermissionRequiredMixin
 from movil.models import Categoria
 
 class Categori_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
-    permission_required = 'movil.change_Categoria'
+    permission_required = 'view_categoria'
     model = Categoria
     template_name = 'categoria/categoria_lista.html'
 
@@ -46,7 +46,8 @@ class Categori_Lista(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVi
         return context
 
 
-class CategoriaCreate(CreateView):
+class CategoriaCreate(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    permission_required = 'add_categoria'
     model = Categoria
     form_class = CategoriaForm
     template_name = 'categoria/crear_categoria.html'
@@ -78,7 +79,8 @@ class CategoriaCreate(CreateView):
         context['action'] = 'add'
         return context
 
-class CategoriaUpdate(UpdateView):
+class CategoriaUpdate(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    permission_required = 'change_categoria'
     model = Categoria
     form_class = CategoriaForm
     template_name = 'categoria/crear_categoria.html'
@@ -111,7 +113,8 @@ class CategoriaUpdate(UpdateView):
         context['action'] = 'edit'
         return context
 
-class CategoriaDelete(DeleteView):
+class CategoriaDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
+    permission_required = 'delete_categoria'
     model = Categoria
     form_class = CategoriaForm
     template_name = 'categoria/eliminar.html'

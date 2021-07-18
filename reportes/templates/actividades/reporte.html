@@ -1,0 +1,64 @@
+{% extends 'lista.html' %}
+
+{% load static %}
+{% block head_list %}
+<script src="{% static 'lib/plugins/moment/moment.js' %}"></script>
+<script src="{% static 'lib/daterangepicker-3.1/spanish.js' %}"></script>
+<script src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
+<link href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}" rel="stylesheet"/>
+
+<link href="{% static 'lib/DataTables-1.10.24/plugins/buttons-1.6.1/css/buttons.bootstrap.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'lib/DataTables-1.10.24/plugins/buttons-1.6.1/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'lib/DataTables-1.10.24/plugins/jszip-2.5.0/jszip.min.js' %}"></script>
+<script src="{% static 'lib/DataTables-1.10.24/plugins/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+<script src="{% static 'lib/DataTables-1.10.24/plugins/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+<script src="{% static 'lib/DataTables-1.10.24/plugins/buttons-1.6.1/js/buttons.html5.min.js' %}"></script>
+
+<script src="{% static 'Actividades/js/reporte.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-chart-line"></i>
+            {{ titulo }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label>Rango de fechas:</label>
+                    {{ form.range_date }}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <table class="table table-bordered" id="data">
+            <thead>
+            <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Total Horas</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <a href="{{ list_url }}" class="btn btn-success btn-flat">
+            <i class="fas fa-sync"></i> Actualizar
+        </a>
+
+    </div>
+    <!-- /.card -->
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

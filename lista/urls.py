@@ -29,6 +29,8 @@ urlpatterns = [
     path('', Create_index_view.as_view(), name="index"),
     url(r'login/', include('login.urls')),
     url(r'^movil/', include('movil.urls')),
+    url(r'^reporte/', include('reportes.urls')),
+    path('user/', include('user.urls')),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

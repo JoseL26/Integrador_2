@@ -1,6 +1,7 @@
 from crum import get_current_user
 from django.db import models
 
+from datetime import datetime
 
 # Create your models here.
 from django.forms import model_to_dict
@@ -141,6 +142,8 @@ class Equipo(models.Model):
         item['Marca'] = self.Marca.toJSON()
         return item
 
+
+
 class OrdenTrabajo(models.Model):
     Orden = models.CharField(max_length=10, primary_key=True)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
@@ -160,14 +163,13 @@ class OrdenTrabajo(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['equipo'] = self.equipo.toJSON()
+        item['Responsable'] = self.Responsable.toJSON()
         return item
 
 class Operciones(models.Model):
     Descripcion = models.CharField(max_length=50)
-    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     orden = models.ForeignKey(OrdenTrabajo, on_delete=models.CASCADE)
-    Etapa = models.CharField(max_length=10)
-    Resposable = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     horas = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     def __str__(self):
@@ -175,35 +177,43 @@ class Operciones(models.Model):
 
 class ParteHoras(models.Model):
     Empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-    fecha = models.DateField()
+    fecha = models.DateField(default=datetime.now)
     TotalHoras = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     class Meta:
-        ordering = ["fecha"]
+        ordering = ["id"]
+        verbose_name = "ParteHora"
         verbose_name_plural = "ParteHoras"
 
     def __str__(self):
-        return self.fecha
+        return self.Empleado.Nombres
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['Empleado'] = self.Empleado.toJSON()
+        item['fecha'] = self.fecha.strftime('%Y-%m-%d')
+        item['TotalHoras'] = format(self.TotalHoras, '.2f')
+        item['det'] = [i.toJSON() for i in self.detparte_set.all()]
         return item
 
 
-class DetalleParte(models.Model):
-    NumParte = models.ManyToManyField(ParteHoras)
-    Orden = models.ManyToManyField(OrdenTrabajo)
-    operacion = models.ForeignKey(Operciones, on_delete=models.CASCADE)
+class DetParte(models.Model):
+    parte = models.ForeignKey(ParteHoras, on_delete=models.CASCADE)
+    Orden = models.ForeignKey(OrdenTrabajo, on_delete=models.CASCADE)
+    operacion = models.IntegerField(default=0, blank=True, null=True)
     desc_actividad = models.CharField(max_length=100, blank=True)
     Cantidad = models.DecimalField(default=00.00, max_digits=4, decimal_places=2)
 
     class Meta:
-        ordering = ["operacion"]
-        verbose_name_plural = "DetallePartes"
+        ordering = ["id"]
+        verbose_name = "Detalle de parte"
+        verbose_name_plural = "Detalle de partes"
 
     def __str__(self):
-        return self.operacion
+        return self.Orden.Orden
 
     def toJSON(self):
-        item = model_to_dict(self)
+        item = model_to_dict(self, exclude=['parte'])
+        item['Orden'] = self.Orden.toJSON()
+        item['Cantidad'] = format(self.Cantidad, '.2f')
         return item
