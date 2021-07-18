@@ -41,7 +41,7 @@ class Parte_horas_list(LoginRequiredMixin, ValidatePermissionRequiredMixin, List
                 for i in DetParte.objects.filter(parte_id=request.POST['id']):
                     data.append(i.toJSON())
             else:
-                data['error'] = 'a ocurrido un error'
+                data['error'] = 'ha ocurrido un error'
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)

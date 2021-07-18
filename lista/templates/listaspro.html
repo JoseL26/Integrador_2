@@ -94,7 +94,19 @@
             "Scala",
             "Scheme"
         ];
-        $('input[name="buscar"]').autocomplete({
+
+        var horas = {
+            items : {
+                empleado: '',
+                fecha: '',
+                totalHoras: 0.00,
+                activitys:[]
+            },
+            add: function(){
+            }
+        };
+
+        $('input[name="busca"]').autocomplete({
            source: function(request, response){
                 $.ajax({
                     url: window.location.pathname,
@@ -115,7 +127,7 @@
            delay: 500,
            minLength: 1,
            select: function(event, ui){
-            console.log(ui.item);
+            console.log(horas.items);
            }
         });
 

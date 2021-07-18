@@ -18,6 +18,7 @@
 
     <link href="{% static 'lib/plugins/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/plugins/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+<<<<<<< HEAD
 
 
     <script src="{% static 'horas/horas.js' %}"></script>
@@ -72,9 +73,52 @@
                                     </tbody>
                                 </table>
 
+=======
+    <script src="{% static 'horas/horas.js' %}"></script>
+    
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<body onload="">
+    
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i>
+            {{ titulo }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Detalle de actividades</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Buscador de equipos</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="buscar" placeholder="ingrese la descripción de equipo "
+                                       autocomplete="on">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-info btn-flat">
+                                        <i class="las la-times"></i>
+                                    </button>
+                                </span>
+>>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
                             </div>
                             <!-- /.card-body -->
                         </div>
+<<<<<<< HEAD
                     </div>
                     <div class="col-lg-4">
                         <div class="card card-secondary">
@@ -100,8 +144,133 @@
                             </div>
                             <!-- /.card-body -->
 
+=======
+                        <hr>
+                        <table class="table table-striped table-bordered table-hover" id="tbdeth">
+                            <thead>
+                            <tr>
+                                <th>Eliminar</th>
+                                <th>orden</th>
+                                <th>Equipo</th>
+                                <th>Operación</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <script>
+                            function eliminar(id){
+                                const table = document.getElementById('tbdeth');
+                                let i = $(id).closest('tr').index();
+                                
+                                table.deleteRow(i);
+
+                            }
+                            function crear(){
+                                const table = document.getElementById('tbdeth');
+                                const total = document.getElementById('totalh').value;
+                                const fecha = document.getElementById('fecha').value;
+                                const empleado = document.getElementById('id_Empleado').value;
+                                
+
+                                const detalle=[];
+                                for (let index = 1; index < table.rows.length; index++) {
+                                    const element = table.rows[index];
+                                    
+                                    const equipo = element.cells[2].innerHTML;
+                                    const orden = element.cells[1].innerHTML;
+                                    const operacion = element.cells[3].children[0].value;
+                                    const descripcion = element.cells[4].children[0].value;
+                                    const cantidad = element.cells[5].children[0].value;
+                                    
+                                    const item = {
+                                        equipo,
+                                        orden,
+                                        operacion,
+                                        descripcion,
+                                        cantidad,                                        
+                                    }
+                                    detalle.push(item);
+                                }
+
+                                const data = {
+                                    total,
+                                    detalle,
+                                    empleado,
+                                    fecha,
+                                }
+                                console.log(data);
+                                const datajson = {
+                                            action:"crear_detalle",
+                                            data,
+                                        };
+                                
+                                    $.ajax({
+                                        url: window.location.pathname,
+                                        type: 'POST',
+                                        data: JSON.stringify(datajson),
+                                        contentType: 'application/json',
+                                        dataType: 'json'
+                                        }).done(function (data) {
+                                            console.log(data);
+                                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                                            alert(textStatus+': '+errorThrown);
+                                        }).always(function (data) {
+
+                                    });
+                                
+
+                            }
+
+                            function calcular(){
+                                const table = document.getElementById('tbdeth');
+                                let total = 0;
+
+                                for (let index = 1; index < table.rows.length; index++) {
+                                    const element = table.rows[index];
+                                    
+                                    const value = element.cells[5].children[0].value;
+                                    total = total+parseInt(value);
+                                    
+                                }
+                                
+
+                                document.getElementById('totalh').value = total;
+                            }                            
+                        </script>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos de parte de horas</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Empleado:</label>
+                            {{form.Empleado}}
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha:</label>
+                            {{form.fecha}}
+                        </div>
+                        <div class="form-group">
+                            <label>Total:</label>
+                            {{form.TotalHoras}}
+>>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
                         </div>
                     </div>
+<<<<<<< HEAD
+=======
+                    <!-- /.card-body -->
+
+>>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
                 </div>
 
             </div>
@@ -121,4 +290,20 @@
         //tareas.list();
     </script>
 
+<<<<<<< HEAD
+=======
+    </div>
+    <div class="card-footer">
+        <button  class="btn btn-primary btn-flat " id="btnTextual" onclick="crear()">
+            <i class="las la-save"></i> Guardar Registro
+        </button>
+        <a href="" class="btn btn-danger">
+            <i class="las la-times"></i> Cancelar
+        </a>
+        <button onclick="generarpdf()" class="btn btn-primary"><span class="las la-print"></span> Generar Reporte</button>
+    </div>
+    <!-- /.card -->
+</div>
+</body>
+>>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
 {% endblock %}
