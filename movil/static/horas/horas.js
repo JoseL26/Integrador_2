@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var tblOrdens;
 var tareas = {
     items : {
@@ -23,7 +22,7 @@ var tareas = {
     },
     list: function(){
     this.calculo_total();
-        tblOrdens = $('#tblorden').DataTable({
+        tblOrdens = $('#tbdeth').DataTable({
             responsive: true,
             autoWidth: false,
             destroy: true,
@@ -93,8 +92,6 @@ var tareas = {
         });
     },
 };
-=======
->>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
 
 $(function () {
 
@@ -103,7 +100,7 @@ $(function () {
             Empleado: '',
             fecha: '',
             TotalHoras: 0.00,
-            activity: []
+            actividades: []
         },
     };
 
@@ -137,25 +134,23 @@ $(function () {
 
             });
         },
-<<<<<<< HEAD
-           delay: 500,
-           minLength: 1,
-           select: function(event, ui){
-               event.preventDefault();
-               console.clear();
-               ui.item.operacion=1;
-               ui.item.desc_actividad='';
-               ui.item.Cantidad=1;
-               console.log(tareas.items);
-
-               tareas.add(ui.item);
-               tareas.list();
-               $(this).val('');
-           }
-     });
+       delay: 500,
+       minLength: 1,
+       select: function(event, ui){
+           event.preventDefault();
+           console.clear();
+           ui.item.operacion=1;
+           ui.item.desc_actividad='';
+           ui.item.Cantidad=1;
+           console.log(tareas.items);
+           tareas.add(ui.item);
+           tareas.list();
+           $(this).val('');
+       }
+    });
 
      //evento cantidad
-     $('#tblorden tbody')
+     $('#tbdeth tbody')
          .on('click', 'a[rel="remove"]', function(){
             var tr = tblOrdens.cell($(this).closest('td, li')).index();
             tareas.items.actividades.splice(tr.row, 1);
@@ -207,34 +202,5 @@ $(function () {
                 location.href = '/movil/actividades/lista/';
             });
      });
-
      tareas.list();
-
-=======
-        delay: 500,
-        minLength: 1,
-        select: function(event, ui){
-            event.preventDefault();
-            
-            const item = ui.item;
-         //   horas.items.activity.push(item);
-           // console.log(horas);
-            const table = document.getElementById('tbdeth')
-            table.insertRow(-1).innerHTML = `
-                <td>
-                    <button type="button" onclick="eliminar(this)" class="btn btn-danger btn-xs btn-flat">
-                        <span class="las la-trash"></span>
-                    </button>
-                </td>
-                <td>${item.id}</td>
-                <td>${item.Cod_equipo}</td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="number" class="form-control" oninput="calcular()" value="0" id = "idcampo_${item.id}" name = "ncampo_${item.id}"></td>
-            `;
-
-
-        }
-    });
->>>>>>> dfcde0dbb6efe413d73efe77042402d6398d59fe
 });

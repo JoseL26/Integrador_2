@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 import json
 import os
 
@@ -8,16 +7,14 @@ from django.db import transaction
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.utils.decorators import method_decorator
 from xhtml2pdf import pisa
-from django.contrib.staticfiles import finders
 
 from movil.forms import ParteHorasForm
 from movil.mixin import ValidatePermissionRequiredMixin
-from movil.models import ParteHoras, Equipo, OrdenTrabajo, DetParte
-
+from movil.models import ParteHoras, OrdenTrabajo, DetParte
 
 class Parte_horas_list(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     model = ParteHoras
@@ -54,7 +51,6 @@ class Parte_horas_list(LoginRequiredMixin, ValidatePermissionRequiredMixin, List
         context['list_url'] = reverse_lazy('movil:PhorasList')
         context['entity'] = 'ParteHoras'
         return context
-
 
 class Parte_horas_create(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = ParteHoras

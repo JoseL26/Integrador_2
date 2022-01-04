@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from movil.mixin import ValidatePermissionRequiredMixin
 
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
 from datetime import *
